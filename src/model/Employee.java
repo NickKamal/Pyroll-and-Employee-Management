@@ -13,19 +13,16 @@ public class Employee {
     public void setEmployeeName(String name)
     {
         this.name = name;
-        System.out.println("Name: " + name);
     }
 
     public void setEmployeePos(String position)
     {
         this.position = position;
-        System.out.println("Position: " + position);
     }
 
     public void setEmployeeId(String id)
     {
         this.id =id;
-        System.out.println("ID: " + id);
     }
 
     public void setEmployeeWage(float wagePerHour)
@@ -34,8 +31,31 @@ public class Employee {
         this.wagePerHour = wagePerHour;
     }
 
+    public String getEmpName()
+    {
+        return name;
+    }
+
+    public String getEmpId()
+    {
+        return id;
+    }
+
+    public String getEmpPos()
+    {
+        return position;
+    }
+
     public float getEmployeeWage()
     {
         return wagePerHour;
+    }
+
+    public void getEmpInfo()
+    {
+        System.out.println("Name: " + name);
+        System.out.println("Position: " + position);
+        System.out.println("ID: " + id);
+        System.out.println("Wage per hour: " + wagePerHour);
     }
 }

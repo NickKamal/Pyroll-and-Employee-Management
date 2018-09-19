@@ -10,8 +10,8 @@ public class Payroll {
         Scanner kb = new Scanner(System.in);
 
         // Creates an employee list
-        ArrayList<Employee> employees;
-        employees = new ArrayList<>();
+        Map employees;
+        employees = new HashMap();
 
         // Creates an admin dictionary
         Map admins = new HashMap();
@@ -21,7 +21,7 @@ public class Payroll {
         do {
 
             // Asks for user input
-            System.out.println("Please enter one of the following option (1, 2, or 3): ");
+            System.out.println("\nPlease enter one of the following options (1, 2, or 3): ");
             System.out.println("1: Administration login.");
             System.out.println("2: Create an administration account.");
             System.out.println("3: Close the program.");
@@ -46,16 +46,32 @@ public class Payroll {
                         boolean check = true;
                         do {
                             // Asks for admin option input
-                            System.out.println("Welcome!\n");
-                            System.out.println("Please enter one of the following option (1, 2, or 3): ");
+                            System.out.println("\nWelcome!\n");
+                            System.out.println("Please enter one of the following options (1, 2, 3, or 4): ");
                             System.out.println("1: Add a new employee");
                             System.out.println("2: Payroll Calculation.");
-                            System.out.println("3: Close the program.");
+                            System.out.println("3. Modify an employee's info.");
+                            System.out.println("4: Close the program.");
                             int pick = kb.nextInt();
                             kb.nextLine();
 
                             // Deals with option 1
                             if (pick == 1) {
+                                Employee newEmp = new Employee();
+                                System.out.println("Enter employee's Name: ");
+                                newEmp.setEmployeeName(kb.nextLine());
+                                System.out.println("Enter employee's ID: ");
+                                newEmp.setEmployeeId(kb.nextLine());
+                                System.out.println("Enter employee's position: ");
+                                newEmp.setEmployeePos(kb.nextLine());
+                                System.out.println("Enter employee's wage: ");
+                                newEmp.setEmployeeWage(kb.nextFloat());
+                                kb.nextLine();
+                                employees.put(newEmp.getEmpId(), newEmp);
+                                System.out.println("\nYou entered the following information: ");
+                                newEmp.getEmpInfo();
+
+
                                 check = true;
                             }
 
@@ -67,6 +83,50 @@ public class Payroll {
 
                             // Deals with option 3
                             else if (pick == 3) {
+                                System.out.println("Please enter the ID of the employee: ");
+                                String id = kb.nextLine();
+                                Employee emp = (Employee) employees.get(id);
+                                System.out.println("Choose one of the following options (1, 2, or 3):");
+                                System.out.println("1. Change the employee's name: ");
+                                System.out.println("2. Change the employee's position: ");
+                                System.out.println("3. Change the employee's wage per hour; ");
+                                int input = kb.nextInt();
+                                kb.nextLine();
+                                switch(input)
+                                {
+                                    case 1:
+                                    {
+                                        System.out.println("Please enter the new name: ");
+                                        emp.setEmployeeName(kb.nextLine());
+                                        emp.getEmpInfo();
+                                        break;
+
+                                    }
+                                    case 2:
+                                    {
+                                        System.out.println("Please enter the new position: ");
+                                        emp.setEmployeePos(kb.nextLine());
+                                        emp.getEmpInfo();
+                                        break;
+                                    }
+                                    case 3:
+                                    {
+                                        System.out.println("Please enter the new wage per hour: ");
+                                        emp.setEmployeeWage(kb.nextFloat());
+                                        emp.getEmpInfo();
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        System.out.println("\nInvalid entry!!\n");
+                                    }
+                                }
+                                check = true;
+                            }
+
+                            // Deals with option 4
+                            else if (pick == 4)
+                            {
                                 check = false;
                             }
 

@@ -1,6 +1,9 @@
 package model;
 
 public class Adminsitration {
+    /**
+     * Creates an Administration profile in the system.
+     */
 
     private String userName;
     private String password;
