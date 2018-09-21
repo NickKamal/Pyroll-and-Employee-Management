@@ -1,6 +1,5 @@
 package ui;
-import model.Adminsitration;
-import model.Employee;
+import model.*;
 import java.util.*;
 
 public class Payroll {
@@ -77,7 +76,7 @@ public class Payroll {
 
                             // Deals with option 2
                             else if (pick == 2) {
-
+                                Salary.payroll();
                                 check = true;
                             }
 
@@ -136,7 +135,7 @@ public class Payroll {
                                 check = true;
 
                             }
-                        }while(check == true);
+                        }while(check);
                     }
 
                     // Deals with wrong password
@@ -177,6 +176,7 @@ public class Payroll {
                     newAdmin.setAdminWage(kb.nextFloat());
                     kb.nextLine();
                     admins.put(newAdmin.getID(), newAdmin.getPassword());
+                    newAdmin.getinfo();
                 }
                 else
                 {
@@ -199,7 +199,7 @@ public class Payroll {
                 flag = true;
             }
 
-        }while(flag == true);
+        }while(flag);
 
 
     }

@@ -8,7 +8,7 @@ public class Adminsitration {
     private String userName;
     private String password;
     private String adminId;
-    private String amdinPos;
+    private String adminPos;
     private float adminWage;
 
     public void setUserName(String userName)
@@ -21,8 +21,6 @@ public class Adminsitration {
         this.password = password;
     }
 
-
-
     public void setAdminId(String adminId)
     {
         this.adminId = adminId;
@@ -30,7 +28,7 @@ public class Adminsitration {
 
     public void setAdminPos(String adminPos)
     {
-        this.amdinPos = adminPos;
+        this.adminPos = adminPos;
     }
 
     public void setAdminWage(float adminWage)
@@ -50,5 +48,13 @@ public class Adminsitration {
     public String getPassword()
     {
         return password;
+    }
+    public void getinfo()
+    {
+        System.out.println("You entered the following info:");
+        System.out.println("Admin's Name: " + userName);
+        System.out.println("Admin's Id: " + adminId);
+        System.out.println("Admin's Position: " + adminPos);
+        System.out.println("Admn's Wage: " + adminWage);
     }
 }
