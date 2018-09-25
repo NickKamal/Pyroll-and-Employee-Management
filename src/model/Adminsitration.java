@@ -9,7 +9,7 @@ public class Adminsitration {
     private String password;
     private String adminId;
     private String adminPos;
-    private float adminWage;
+    private double adminWage;
 
     //MODIFIES: this
     //EFFECTS: set the name of the admin. to the given argument
@@ -42,14 +42,14 @@ public class Adminsitration {
     //REQUIRES: a number
     //MODIFIES: this
     //EFFECTS: set the wage of the admin. to the given argument
-    public void setAdminWage(float adminWage)
+    public void setAdminWage(double adminWage)
     {
         this.adminWage = adminWage;
     }
 
 
     //EFFECTS: returns admin's wage
-    public float getAdminWage()
+    public double getAdminWage()
     {
         return adminWage;
     }

@@ -8,7 +8,7 @@ public class Employee {
     private String name;
     private String position;
     private String id;
-    private float wagePerHour;
+    private double wagePerHour;
 
     //MODIFIES: this
     //EFFECTS: set the name of the employee to the given argument
@@ -34,7 +34,7 @@ public class Employee {
     //REQUIRES: a number
     //MODIFIES: this
     //EFFECTS: set the wage of the admin. to the given argument
-    public void setEmployeeWage(float wagePerHour)
+    public void setEmployeeWage(double wagePerHour)
     {
 
         this.wagePerHour = wagePerHour;
@@ -60,7 +60,7 @@ public class Employee {
     }
 
     //EFFECTS: returns the wage of the employee
-    public float getEmployeeWage()
+    public double getEmployeeWage()
     {
         return wagePerHour;
     }
