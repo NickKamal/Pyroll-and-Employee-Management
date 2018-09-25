@@ -8,7 +8,7 @@ public class Payroll {
         // Initialize a scanner object
         Scanner kb = new Scanner(System.in);
 
-        // Creates an employee list
+        // Creates an employee dictionary
         Map employees;
         employees = new HashMap();
 
