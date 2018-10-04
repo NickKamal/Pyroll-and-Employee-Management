@@ -1,10 +1,14 @@
 package ui;
 import model.*;
+
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
-public class Payroll {
 
-    public static void main(String[] args) {
+public class Payroll{
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
         // Initialize a scanner object
         Scanner kb = new Scanner(System.in);
 
@@ -16,6 +20,7 @@ public class Payroll {
         Map admins = new HashMap();
 
         boolean flag = false;
+
 
         do {
 
@@ -56,19 +61,22 @@ public class Payroll {
 
                             // Deals with option 1
                             if (pick == 1) {
-                                Employee newEmp = new Employee();
+                                BioRecords newEmp = new Employee();
                                 System.out.println("Enter employee's Name: ");
-                                newEmp.setEmployeeName(kb.nextLine());
+                                newEmp.setName(kb.nextLine());
                                 System.out.println("Enter employee's ID: ");
-                                newEmp.setEmployeeId(kb.nextLine());
+                                newEmp.setID(kb.nextLine());
                                 System.out.println("Enter employee's position: ");
-                                newEmp.setEmployeePos(kb.nextLine());
+                                newEmp.setPosition(kb.nextLine());
                                 System.out.println("Enter employee's wage: ");
-                                newEmp.setEmployeeWage(kb.nextFloat());
+                                newEmp.setWage(kb.nextFloat());
                                 kb.nextLine();
-                                employees.put(newEmp.getEmpId(), newEmp);
+                                System.out.println("Enter employee's start date: ");
+                                newEmp.setStartDate(kb.nextLine());
+                                employees.put(newEmp.getID(), newEmp);
                                 System.out.println("\nYou entered the following information: ");
-                                newEmp.getEmpInfo();
+                                newEmp.getInfo();
+                                newEmp.write();
 
 
                                 check = true;
@@ -96,23 +104,23 @@ public class Payroll {
                                     case 1:
                                     {
                                         System.out.println("Please enter the new name: ");
-                                        emp.setEmployeeName(kb.nextLine());
-                                        emp.getEmpInfo();
+                                        emp.setName(kb.nextLine());
+                                        emp.getInfo();
                                         break;
 
                                     }
                                     case 2:
                                     {
                                         System.out.println("Please enter the new position: ");
-                                        emp.setEmployeePos(kb.nextLine());
-                                        emp.getEmpInfo();
+                                        emp.setPosition(kb.nextLine());
+                                        emp.getInfo();
                                         break;
                                     }
                                     case 3:
                                     {
                                         System.out.println("Please enter the new wage per hour: ");
-                                        emp.setEmployeeWage(kb.nextFloat());
-                                        emp.getEmpInfo();
+                                        emp.setWage(kb.nextFloat());
+                                        emp.getInfo();
                                         break;
                                     }
                                     default:
@@ -165,18 +173,21 @@ public class Payroll {
                 {
                     Adminsitration newAdmin = new Adminsitration();
                     System.out.println("Choose a User Name: ");
-                    newAdmin.setUserName(kb.nextLine());
+                    newAdmin.setName(kb.nextLine());
                     System.out.println("Choose a password: ");
                     newAdmin.setPassword(kb.nextLine());
                     System.out.println("Enter your ID: ");
-                    newAdmin.setAdminId(kb.nextLine());
+                    newAdmin.setID(kb.nextLine());
                     System.out.println("Enter Admin's Position: ");
-                    newAdmin.setAdminPos(kb.nextLine());
+                    newAdmin.setPosition(kb.nextLine());
                     System.out.println("Enter Admin's wage per hour: ");
-                    newAdmin.setAdminWage(kb.nextFloat());
+                    newAdmin.setWage(kb.nextFloat());
                     kb.nextLine();
+                    System.out.println("Enter Admin's start date: ");
+                    newAdmin.setStartDate(kb.nextLine());
                     admins.put(newAdmin.getID(), newAdmin.getPassword());
-                    newAdmin.getinfo();
+                    newAdmin.getInfo();
+                    newAdmin.write();
                 }
                 else
                 {
@@ -198,6 +209,8 @@ public class Payroll {
                 System.out.println("Invalid Option!");
                 flag = true;
             }
+
+
 
         }while(flag);
 

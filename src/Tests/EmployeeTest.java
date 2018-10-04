@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.beans.BeanProperty;
-
 public class EmployeeTest {
 
     private Employee emp;
@@ -20,14 +18,14 @@ public class EmployeeTest {
     @Test
     public void testUserInfo()
     {
-        emp.setEmployeePos("ab");
-        emp.setEmployeeWage(20.3);
+        emp.setPosition("ab");
+        emp.setWage(20.3);
 
-        assertEquals("ab", emp.getEmpPos());
-        assertEquals(20.3, emp.getEmployeeWage());
+        assertEquals("ab", emp.getPosition());
+        assertEquals(20.3, emp.getWage());
 
-        emp.setEmployeePos("");
-        assertEquals("", emp.getEmpPos());
+        emp.setPosition("");
+        assertEquals("", emp.getPosition());
 
 
     }
