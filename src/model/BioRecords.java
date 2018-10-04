@@ -1,6 +1,7 @@
 package model;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public interface BioRecords {
@@ -14,6 +15,6 @@ public interface BioRecords {
     public double getWage();
     public void getInfo();
 
-    public void setStartDate(String nextLine);
-    public void write() throws FileNotFoundException, UnsupportedEncodingException;
+    public void setStartYear(String nextLine);
+    public void write() throws IOException;
 }

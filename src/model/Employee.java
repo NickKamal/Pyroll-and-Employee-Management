@@ -1,19 +1,27 @@
 package model;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.*;
 
 public class Employee extends Worker {
+    public Employee(String s1, String s2, String s3, double d, String s4) {
+        name = s1;
+        position = s2;
+        id = s3;
+        wagePerHour = d;
+        startYear = s4;
+    }
+
     /**
      * Creates an Employee's profile in the system.
      */
-    public void write() throws FileNotFoundException, UnsupportedEncodingException {
-        PrintWriter writer = new PrintWriter("empInfo.txt","UTF-8");
-        writer.println(getName() + "," + getID() + "," + getPosition() + "," + getWage() + "," + getStartDate());
+
+    public Employee()
+    {}
+
+
+    public void write() throws IOException {
+        PrintWriter writer = new PrintWriter(new FileWriter("empInfo.txt", true));
+        writer.println(getName() + "," + getID() + "," + getPosition() + "," + getWage() + "," + getStartYear() + ",");
         writer.close();
     }
 

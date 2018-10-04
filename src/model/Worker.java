@@ -6,7 +6,7 @@ public abstract class Worker implements BioRecords, WageRecords {
     protected String position;
     protected String id;
     protected double wagePerHour;
-    protected String startDate;
+    protected String startYear;
 
 
     //MODIFIES: this
@@ -64,11 +64,11 @@ public abstract class Worker implements BioRecords, WageRecords {
         return wagePerHour;
     }
 
-    public void setStartDate(String date){
-        this.startDate = date;
+    public void setStartYear(String date){
+        this.startYear = date;
     }
-    public String getStartDate(){
-        return startDate;
+    public String getStartYear(){
+        return startYear;
     }
     public void wageRecord(){}
     public void getCurrentPeriodWage(){}
@@ -81,7 +81,7 @@ public abstract class Worker implements BioRecords, WageRecords {
         System.out.println("Position: " + position);
         System.out.println("ID: " + id);
         System.out.println("Wage per hour: " + wagePerHour);
-        System.out.println("Start Date: " + startDate);
+        System.out.println("Start Date: " + startYear);
     }
 
 }

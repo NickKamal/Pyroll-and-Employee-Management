@@ -3,9 +3,6 @@ package model;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class Adminsitration extends Worker{
     /**
@@ -36,15 +33,16 @@ public class Adminsitration extends Worker{
         System.out.println("Admin's Id: " + id);
         System.out.println("Admin's Position: " + position);
         System.out.println("Admn's Wage: " + wagePerHour);
-        System.out.println("Start Date: " + startDate);
+        System.out.println("Start Date: " + startYear);
     }
 
     @Override
     public void write() throws FileNotFoundException, UnsupportedEncodingException {
             PrintWriter writer = new PrintWriter("adminInfo.txt","UTF-8");
-            writer.println(getName() + "," + getID() + "," + getPosition() + "," + getWage() + "," + getStartDate() + "," + getPassword());
+            writer.println(getName() + "," + getID() + "," + getPosition() + "," + getWage() + "," + getStartYear() + "," + getPassword() + ",");
             writer.close();
         }
+
 
     }
 

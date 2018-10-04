@@ -1,1 +1,2 @@
-Nick,1449015,SA,23.0,Jan 34,532
+Nick,1449014,Sales Associate,14.0,2016,
+Nirsukhan,1449015,SA,15.0,3013,

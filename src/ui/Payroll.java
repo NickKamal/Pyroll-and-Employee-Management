@@ -1,14 +1,15 @@
 package ui;
 import model.*;
 
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 
-public class Payroll{
+public class Payroll {
 
-    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+    public static void main(String[] args) throws IOException {
         // Initialize a scanner object
         Scanner kb = new Scanner(System.in);
 
@@ -20,6 +21,27 @@ public class Payroll{
         Map admins = new HashMap();
 
         boolean flag = false;
+
+        // Pointers to lines for reading
+        List<String> adm = Files.readAllLines(Paths.get("adminInfo.txt"));
+        List<String> emps = Files.readAllLines(Paths.get("empInfo.txt"));
+
+
+        // Makes an array out of the read line and add key/value to admins
+        for (String line : adm) {
+            ArrayList<String> partsOfAdm = splitOnComma(line);
+            admins.put(partsOfAdm.get(1), partsOfAdm.get(5));
+
+
+        }
+
+        // Makes an array out of the read line and add key/value to employees
+        for (String line : emps) {
+            ArrayList<String> partsOfEmp = splitOnComma(line);
+            employees.put(partsOfEmp.get(1), new Employee(partsOfEmp.get(0),partsOfEmp.get(2),partsOfEmp.get(1),Double.parseDouble(partsOfEmp.get(3)),partsOfEmp.get(4)));
+
+
+        }
 
 
         do {
@@ -33,20 +55,17 @@ public class Payroll{
             kb.nextLine();
 
             // Execution if user enters option 1
-            if (option == 1)
-            {
+            if (option == 1) {
                 System.out.println("Enter Admin's ID: ");
                 String loginID = kb.nextLine();
 
                 // Checks if the admin is in the list
-                if (admins.containsKey(loginID))
-                {
+                if (admins.containsKey(loginID)) {
                     System.out.println("Enter password: ");
                     String loginPassword = kb.nextLine();
 
                     // Password authentication
-                    if (admins.get(loginID).equals(loginPassword))
-                    {
+                    if (admins.get(loginID).equals(loginPassword)) {
                         boolean check = true;
                         do {
                             // Asks for admin option input
@@ -72,7 +91,7 @@ public class Payroll{
                                 newEmp.setWage(kb.nextFloat());
                                 kb.nextLine();
                                 System.out.println("Enter employee's start date: ");
-                                newEmp.setStartDate(kb.nextLine());
+                                newEmp.setStartYear(kb.nextLine());
                                 employees.put(newEmp.getID(), newEmp);
                                 System.out.println("\nYou entered the following information: ");
                                 newEmp.getInfo();
@@ -99,41 +118,36 @@ public class Payroll{
                                 System.out.println("3. Change the employee's wage per hour; ");
                                 int input = kb.nextInt();
                                 kb.nextLine();
-                                switch(input)
-                                {
-                                    case 1:
-                                    {
+                                switch (input) {
+                                    case 1: {
                                         System.out.println("Please enter the new name: ");
                                         emp.setName(kb.nextLine());
                                         emp.getInfo();
                                         break;
 
                                     }
-                                    case 2:
-                                    {
+                                    case 2: {
                                         System.out.println("Please enter the new position: ");
                                         emp.setPosition(kb.nextLine());
                                         emp.getInfo();
                                         break;
                                     }
-                                    case 3:
-                                    {
+                                    case 3: {
                                         System.out.println("Please enter the new wage per hour: ");
                                         emp.setWage(kb.nextFloat());
                                         emp.getInfo();
                                         break;
                                     }
-                                    default:
-                                    {
+                                    default: {
                                         System.out.println("\nInvalid entry!!\n");
                                     }
                                 }
+                                emp.write();
                                 check = true;
                             }
 
                             // Deals with option 4
-                            else if (pick == 4)
-                            {
+                            else if (pick == 4) {
                                 check = false;
                             }
 
@@ -143,19 +157,17 @@ public class Payroll{
                                 check = true;
 
                             }
-                        }while(check);
+                        } while (check);
                     }
 
                     // Deals with wrong password
-                    else
-                    {
+                    else {
                         System.out.println("Wrong Password!!\n");
                     }
                 }
 
                 // Deals with admin not in the list
-                else
-                {
+                else {
                     System.out.println("Admin not found!!\n");
                     flag = true;
                 }
@@ -163,14 +175,12 @@ public class Payroll{
 
 
             // Execution if user enters option.
-            else if (option == 2)
-            {
+            else if (option == 2) {
                 System.out.println("Enter Authorization Key: ");
                 String authKey = kb.nextLine();
 
                 // If authorized then creates a new admin profile
-                if (authKey.equals("SuperStore1517"))
-                {
+                if (authKey.equals("SuperStore1517")) {
                     Adminsitration newAdmin = new Adminsitration();
                     System.out.println("Choose a User Name: ");
                     newAdmin.setName(kb.nextLine());
@@ -184,13 +194,11 @@ public class Payroll{
                     newAdmin.setWage(kb.nextFloat());
                     kb.nextLine();
                     System.out.println("Enter Admin's start date: ");
-                    newAdmin.setStartDate(kb.nextLine());
+                    newAdmin.setStartYear(kb.nextLine());
                     admins.put(newAdmin.getID(), newAdmin.getPassword());
                     newAdmin.getInfo();
                     newAdmin.write();
-                }
-                else
-                {
+                } else {
                     System.out.println("Wrong Authorization Key!!");
                 }
                 flag = true;
@@ -198,24 +206,27 @@ public class Payroll{
             }
 
             // Execution if user chooses option 3
-            else if (option == 3)
-            {
+            else if (option == 3) {
                 flag = false;
             }
 
             // Deals with invalid option
-            else
-            {
+            else {
                 System.out.println("Invalid Option!");
                 flag = true;
             }
 
 
-
-        }while(flag);
+        } while (flag);
 
 
     }
 
+    // EFFECTS: return an ArrayList out of the given line
+    public static ArrayList<String> splitOnComma(String line) {
+        String[] splits = line.split(",");
+        return new ArrayList<>(Arrays.asList(splits));
 
+
+    }
 }

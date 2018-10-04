@@ -2,8 +2,8 @@ package model;
 
 public interface WageRecords {
 
-    public void setStartDate(String date);
-    public String getStartDate();
+    public void setStartYear(String date);
+    public String getStartYear();
     public void getCurrentPeriodWage();
 
 }
