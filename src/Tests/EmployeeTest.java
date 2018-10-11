@@ -1,4 +1,5 @@
 package Tests;
+import Exceptions.MinWageException;
 import model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,8 +17,7 @@ public class EmployeeTest {
     }
 
     @Test
-    public void testUserInfo()
-    {
+    public void testUserInfo() throws MinWageException {
         emp.setPosition("ab");
         emp.setWage(20.3);
 

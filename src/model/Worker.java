@@ -1,5 +1,7 @@
 package model;
 
+import Exceptions.MinWageException;
+
 public abstract class Worker implements BioRecords, WageRecords {
 
     protected String name;
@@ -7,6 +9,7 @@ public abstract class Worker implements BioRecords, WageRecords {
     protected String id;
     protected double wagePerHour;
     protected String startYear;
+    private double minWage = 12.65;
 
 
     //MODIFIES: this
@@ -33,9 +36,10 @@ public abstract class Worker implements BioRecords, WageRecords {
     //REQUIRES: a number
     //MODIFIES: this
     //EFFECTS: set the wage to the given argument
-    public void setWage(double wagePerHour)
-    {
-
+    public void setWage(double wagePerHour) throws MinWageException {
+        if (wagePerHour < minWage){
+            throw new MinWageException();
+        }
         this.wagePerHour = wagePerHour;
     }
 

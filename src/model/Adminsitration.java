@@ -39,7 +39,9 @@ public class Adminsitration extends Worker{
     @Override
     public void write() throws FileNotFoundException, UnsupportedEncodingException {
             PrintWriter writer = new PrintWriter("adminInfo.txt","UTF-8");
-            writer.println(getName() + "," + getID() + "," + getPosition() + "," + getWage() + "," + getStartYear() + "," + getPassword() + ",");
+            writer.println(EncryptDecrypt.encrypt(getName()) + ","
+                    + EncryptDecrypt.encrypt(getID()) + "," + EncryptDecrypt.encrypt(getPosition())
+                    + "," + getWage() + "," + getStartYear() + "," + EncryptDecrypt.encrypt(getPassword()) + ",");
             writer.close();
         }
 

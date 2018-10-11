@@ -21,7 +21,9 @@ public class Employee extends Worker {
 
     public void write() throws IOException {
         PrintWriter writer = new PrintWriter(new FileWriter("empInfo.txt", true));
-        writer.println(getName() + "," + getID() + "," + getPosition() + "," + getWage() + "," + getStartYear() + ",");
+        writer.println(EncryptDecrypt.encrypt(getName()) + "," + EncryptDecrypt.encrypt(getID()) +
+                "," + EncryptDecrypt.encrypt(getPosition()) + "," + getWage()
+                + "," + getStartYear() + ",");
         writer.close();
     }
 

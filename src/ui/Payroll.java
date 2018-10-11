@@ -1,4 +1,6 @@
 package ui;
+
+import Exceptions.MinWageException;
 import model.*;
 
 import java.io.IOException;
@@ -9,7 +11,7 @@ import java.nio.file.Paths;
 
 public class Payroll {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, MinWageException {
         // Initialize a scanner object
         Scanner kb = new Scanner(System.in);
 
@@ -23,25 +25,7 @@ public class Payroll {
         boolean flag = false;
 
         // Pointers to lines for reading
-        List<String> adm = Files.readAllLines(Paths.get("adminInfo.txt"));
-        List<String> emps = Files.readAllLines(Paths.get("empInfo.txt"));
-
-
-        // Makes an array out of the read line and add key/value to admins
-        for (String line : adm) {
-            ArrayList<String> partsOfAdm = splitOnComma(line);
-            admins.put(partsOfAdm.get(1), partsOfAdm.get(5));
-
-
-        }
-
-        // Makes an array out of the read line and add key/value to employees
-        for (String line : emps) {
-            ArrayList<String> partsOfEmp = splitOnComma(line);
-            employees.put(partsOfEmp.get(1), new Employee(partsOfEmp.get(0),partsOfEmp.get(2),partsOfEmp.get(1),Double.parseDouble(partsOfEmp.get(3)),partsOfEmp.get(4)));
-
-
-        }
+        ReadData(employees, admins);
 
 
         do {
@@ -88,9 +72,18 @@ public class Payroll {
                                 System.out.println("Enter employee's position: ");
                                 newEmp.setPosition(kb.nextLine());
                                 System.out.println("Enter employee's wage: ");
-                                newEmp.setWage(kb.nextFloat());
+                                double wage = kb.nextFloat();
+
+                                try {
+                                    newEmp.setWage(wage);
+                                } catch (MinWageException e) {
+                                    System.out.println("Entered wage is less than the minimum wage!!!");
+                                    System.out.println("Wage set to default(12.65)");
+                                    newEmp.setWage(12.65);
+                                }
+
                                 kb.nextLine();
-                                System.out.println("Enter employee's start date: ");
+                                System.out.println("Enter employee's start year: ");
                                 newEmp.setStartYear(kb.nextLine());
                                 employees.put(newEmp.getID(), newEmp);
                                 System.out.println("\nYou entered the following information: ");
@@ -99,11 +92,13 @@ public class Payroll {
 
 
                                 check = true;
+
+
                             }
 
                             // Deals with option 2
                             else if (pick == 2) {
-                                Salary.payroll();
+                                System.out.println("Enter the employee's ID: ");
                                 check = true;
                             }
 
@@ -111,38 +106,49 @@ public class Payroll {
                             else if (pick == 3) {
                                 System.out.println("Please enter the ID of the employee: ");
                                 String id = kb.nextLine();
-                                Employee emp = (Employee) employees.get(id);
-                                System.out.println("Choose one of the following options (1, 2, or 3):");
-                                System.out.println("1. Change the employee's name: ");
-                                System.out.println("2. Change the employee's position: ");
-                                System.out.println("3. Change the employee's wage per hour; ");
-                                int input = kb.nextInt();
-                                kb.nextLine();
-                                switch (input) {
-                                    case 1: {
-                                        System.out.println("Please enter the new name: ");
-                                        emp.setName(kb.nextLine());
-                                        emp.getInfo();
-                                        break;
+                                if (employees.containsKey(id)) {
+                                    Employee emp = (Employee) employees.get(id);
+                                    System.out.println("Choose one of the following options (1, 2, or 3):");
+                                    System.out.println("1. Change the employee's name: ");
+                                    System.out.println("2. Change the employee's position: ");
+                                    System.out.println("3. Change the employee's wage per hour; ");
+                                    int input = kb.nextInt();
+                                    kb.nextLine();
+                                    switch (input) {
+                                        case 1: {
+                                            System.out.println("Please enter the new name: ");
+                                            emp.setName(kb.nextLine());
+                                            emp.getInfo();
+                                            break;
 
+                                        }
+                                        case 2: {
+                                            System.out.println("Please enter the new position: ");
+                                            emp.setPosition(kb.nextLine());
+                                            emp.getInfo();
+                                            break;
+                                        }
+                                        case 3: {
+                                            System.out.println("Please enter the new wage per hour: ");
+                                            try {
+                                                emp.setWage(kb.nextFloat());
+                                            } catch (MinWageException e) {
+                                                System.out.println("Entered wage is less than the minimum wage!!!");
+                                                System.out.println("Wage set to default(12.65)");
+                                                emp.setWage(12.65);
+                                            }
+                                            emp.getInfo();
+                                            break;
+                                        }
+                                        default: {
+                                            System.out.println("\nInvalid entry!!\n");
+                                        }
                                     }
-                                    case 2: {
-                                        System.out.println("Please enter the new position: ");
-                                        emp.setPosition(kb.nextLine());
-                                        emp.getInfo();
-                                        break;
-                                    }
-                                    case 3: {
-                                        System.out.println("Please enter the new wage per hour: ");
-                                        emp.setWage(kb.nextFloat());
-                                        emp.getInfo();
-                                        break;
-                                    }
-                                    default: {
-                                        System.out.println("\nInvalid entry!!\n");
-                                    }
+                                    emp.write();
                                 }
-                                emp.write();
+                                else {
+                                    System.out.println("ID not Found!!");
+                                }
                                 check = true;
                             }
 
@@ -163,6 +169,7 @@ public class Payroll {
                     // Deals with wrong password
                     else {
                         System.out.println("Wrong Password!!\n");
+                        flag = true;
                     }
                 }
 
@@ -191,13 +198,23 @@ public class Payroll {
                     System.out.println("Enter Admin's Position: ");
                     newAdmin.setPosition(kb.nextLine());
                     System.out.println("Enter Admin's wage per hour: ");
-                    newAdmin.setWage(kb.nextFloat());
+                    double wageAdm = kb.nextFloat();
+                    try {
+                        newAdmin.setWage(wageAdm);
+                    } catch (MinWageException e) {
+                        System.out.println("Entered wage is less than the minimum wage!!!");
+                        System.out.println("Wage set to default(12.65)");
+                        newAdmin.setWage(12.65);
+                    }
                     kb.nextLine();
                     System.out.println("Enter Admin's start date: ");
                     newAdmin.setStartYear(kb.nextLine());
                     admins.put(newAdmin.getID(), newAdmin.getPassword());
                     newAdmin.getInfo();
+                    Employee adm = new Employee(newAdmin.getName(), newAdmin.getID(), newAdmin.getPosition(), newAdmin.getWage(), newAdmin.getStartYear());
+                    employees.put(newAdmin.getID(), adm);
                     newAdmin.write();
+                    adm.write();
                 } else {
                     System.out.println("Wrong Authorization Key!!");
                 }
@@ -220,6 +237,28 @@ public class Payroll {
         } while (flag);
 
 
+    }
+
+    private static void ReadData(Map employees, Map admins) throws IOException {
+        List<String> adm = Files.readAllLines(Paths.get("adminInfo.txt"));
+        List<String> emps = Files.readAllLines(Paths.get("empInfo.txt"));
+
+
+        // Makes an array out of the read line and add key/value to admins
+        for (String line : adm) {
+            ArrayList<String> partsOfAdm = splitOnComma(line);
+            admins.put(EncryptDecrypt.decrypt(partsOfAdm.get(1)), EncryptDecrypt.decrypt(partsOfAdm.get(5)));
+
+
+        }
+
+        // Makes an array out of the read line and add key/value to employees
+        for (String line : emps) {
+            ArrayList<String> partsOfEmp = splitOnComma(line);
+            employees.put(EncryptDecrypt.decrypt(partsOfEmp.get(1)), new Employee(EncryptDecrypt.decrypt(partsOfEmp.get(0)), EncryptDecrypt.decrypt(partsOfEmp.get(2)), EncryptDecrypt.decrypt(partsOfEmp.get(1)), Double.parseDouble(partsOfEmp.get(3)), partsOfEmp.get(4)));
+
+
+        }
     }
 
     // EFFECTS: return an ArrayList out of the given line

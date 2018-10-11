@@ -1,4 +1,5 @@
 package Tests;
+import Exceptions.MinWageException;
 import model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,7 @@ public class AdminTest {
     }
 
     @Test
-    public void testUserInfo()
-    {
+    public void testUserInfo() throws MinWageException {
         admin.setID("ab");
         admin.setPassword("abc");
         admin.setWage(20.4);
