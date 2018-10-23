@@ -4,6 +4,7 @@ import Exceptions.MinWageException;
 import model.*;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,10 +23,16 @@ public class Payroll {
         // Creates an admin dictionary
         Map admins = new HashMap();
 
+        //Creates a employee-salary dictionary
+        Map salaries = new HashMap();
+
+        //Creates a payPeriod-Salary dictionary
+        Map payPeriodSalaries = new HashMap();
+
         boolean flag = false;
 
         // Pointers to lines for reading
-        ReadData(employees, admins);
+        ReadData(employees, admins, payPeriodSalaries, salaries);
 
 
         do {
@@ -98,7 +105,25 @@ public class Payroll {
 
                             // Deals with option 2
                             else if (pick == 2) {
+                                Salary currenSalary;
+                                double currentWorkingHours;
                                 System.out.println("Enter the employee's ID: ");
+                                String payId = kb.nextLine();
+                                String payPeriod;
+                                if (employees.containsKey(payId)) {
+                                    System.out.println("Enter the number of hours for the pay period: ");
+                                    currentWorkingHours = kb.nextDouble();
+                                    System.out.println("Enter the pay period: ");
+                                    kb.nextLine();
+                                    payPeriod = kb.nextLine();
+                                    currenSalary = new Salary((Employee) employees.get(payId), currentWorkingHours,
+                                            payPeriod);
+                                    currenSalary.write();
+                                    currenSalary.earnings();
+
+                                } else {
+                                    System.out.println("ID does not exist!!! Please try again.");
+                                }
                                 check = true;
                             }
 
@@ -136,17 +161,18 @@ public class Payroll {
                                                 System.out.println("Entered wage is less than the minimum wage!!!");
                                                 System.out.println("Wage set to default(12.65)");
                                                 emp.setWage(12.65);
+                                            } finally {
+                                                emp.getInfo();
+                                                break;
                                             }
-                                            emp.getInfo();
-                                            break;
+
                                         }
                                         default: {
                                             System.out.println("\nInvalid entry!!\n");
                                         }
                                     }
                                     emp.write();
-                                }
-                                else {
+                                } else {
                                     System.out.println("ID not Found!!");
                                 }
                                 check = true;
@@ -205,16 +231,19 @@ public class Payroll {
                         System.out.println("Entered wage is less than the minimum wage!!!");
                         System.out.println("Wage set to default(12.65)");
                         newAdmin.setWage(12.65);
+                    } finally {
+                        kb.nextLine();
+                        System.out.println("Enter Admin's start date: ");
+                        newAdmin.setStartYear(kb.nextLine());
+                        admins.put(newAdmin.getID(), newAdmin.getPassword());
+                        newAdmin.getInfo();
+                        Employee adm = new Employee(newAdmin.getName(), newAdmin.getID(), newAdmin.getPosition(), newAdmin.getWage(), newAdmin.getStartYear());
+                        employees.put(newAdmin.getID(), adm);
+                        newAdmin.write();
+                        adm.write();
+
                     }
-                    kb.nextLine();
-                    System.out.println("Enter Admin's start date: ");
-                    newAdmin.setStartYear(kb.nextLine());
-                    admins.put(newAdmin.getID(), newAdmin.getPassword());
-                    newAdmin.getInfo();
-                    Employee adm = new Employee(newAdmin.getName(), newAdmin.getID(), newAdmin.getPosition(), newAdmin.getWage(), newAdmin.getStartYear());
-                    employees.put(newAdmin.getID(), adm);
-                    newAdmin.write();
-                    adm.write();
+
                 } else {
                     System.out.println("Wrong Authorization Key!!");
                 }
@@ -239,9 +268,10 @@ public class Payroll {
 
     }
 
-    private static void ReadData(Map employees, Map admins) throws IOException {
+    private static void ReadData(Map employees, Map admins, Map payPeriodSalaries, Map salaries) throws IOException, MinWageException {
         List<String> adm = Files.readAllLines(Paths.get("adminInfo.txt"));
         List<String> emps = Files.readAllLines(Paths.get("empInfo.txt"));
+        List<String> wageRecords = Files.readAllLines(Paths.get("WageRecord.txt"));
 
 
         // Makes an array out of the read line and add key/value to admins
@@ -255,10 +285,24 @@ public class Payroll {
         // Makes an array out of the read line and add key/value to employees
         for (String line : emps) {
             ArrayList<String> partsOfEmp = splitOnComma(line);
-            employees.put(EncryptDecrypt.decrypt(partsOfEmp.get(1)), new Employee(EncryptDecrypt.decrypt(partsOfEmp.get(0)), EncryptDecrypt.decrypt(partsOfEmp.get(2)), EncryptDecrypt.decrypt(partsOfEmp.get(1)), Double.parseDouble(partsOfEmp.get(3)), partsOfEmp.get(4)));
-
+            employees.put(EncryptDecrypt.decrypt(partsOfEmp.get(1)),
+                    new Employee(EncryptDecrypt.decrypt(partsOfEmp.get(0)), EncryptDecrypt.decrypt(partsOfEmp.get(2)),
+                            EncryptDecrypt.decrypt(partsOfEmp.get(1)), Double.parseDouble(partsOfEmp.get(3)),
+                            partsOfEmp.get(4)));
 
         }
+
+        // Makes an array out of the read line and add key/value to salaries
+        for (String line : wageRecords) {
+            ArrayList<String> partsofWageRecords = splitOnComma(line);
+            Object temp = payPeriodSalaries.put(partsofWageRecords.get(3),
+                    new Salary(EncryptDecrypt.decrypt(partsofWageRecords.get(0)), partsofWageRecords.get(1),
+                            partsofWageRecords.get(2), partsofWageRecords.get(3), partsofWageRecords.get(4),
+                            partsofWageRecords.get(5), partsofWageRecords.get(6), partsofWageRecords.get(7),
+                            partsofWageRecords.get(8)));
+            salaries.put(partsofWageRecords.get(1), temp);
+        }
+
     }
 
     // EFFECTS: return an ArrayList out of the given line
