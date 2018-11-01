@@ -1,25 +1,26 @@
 package Tests;
 
-import Exceptions.MinWageException;
+import Exceptions.LessThanMinWageException;
 import model.BioRecords;
+import model.CompanyStore;
 import model.Employee;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class TestMinWageException {
+public class TestLessThanMinWageException {
     Scanner kb = new Scanner(System.in);
     BioRecords newEmp;
+    CompanyStore companyStore = new CompanyStore("2247");
 
     @Test
     public void TestLessThanMinWageExpectException() {
         try {
-            newEmp = new Employee("a", "b", "AD", 10, "2015");
+            newEmp = new Employee("a", "b", "AD", 10, "2015", "2247", companyStore);
             fail("Failed to catch exception");
-        } catch (MinWageException m) {
+        } catch (LessThanMinWageException m) {
             System.out.println("Exception caught");
         }
 
@@ -27,9 +28,9 @@ public class TestMinWageException {
     @Test
     public void TestMoreThanMinWageNoException() {
         try {
-            newEmp = new Employee("a", "b", "AD", 20, "2015");
+            newEmp = new Employee("a", "b", "AD", 20, "2015", "2247", companyStore);
 
-        } catch (MinWageException m) {
+        } catch (LessThanMinWageException m) {
             fail("Failed to catch exception");
         }
 

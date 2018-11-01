@@ -1,5 +1,5 @@
 package Tests;
-import Exceptions.MinWageException;
+import Exceptions.LessThanMinWageException;
 import model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,13 +9,12 @@ public class AdminTest {
 
     private Adminsitration admin;
     @BeforeEach
-    public void runBefore()
-    {
+    public void runBefore() throws LessThanMinWageException {
         admin = new Adminsitration();
     }
 
     @Test
-    public void testUserInfo() throws MinWageException {
+    public void testUserInfo() throws LessThanMinWageException {
         admin.setID("ab");
         admin.setPassword("abc");
         admin.setWage(20.4);

@@ -1,10 +1,11 @@
+
 package ui;
 
-import Exceptions.MinWageException;
+import Exceptions.LessThanMinWageException;
 import model.*;
 
+
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -12,27 +13,34 @@ import java.nio.file.Paths;
 
 public class Payroll {
 
-    public static void main(String[] args) throws IOException, MinWageException {
+    public static void main(String[] args) throws IOException, LessThanMinWageException {
         // Initialize a scanner object
         Scanner kb = new Scanner(System.in);
 
         // Creates an employee dictionary
         Map employees;
+
+
         employees = new HashMap();
 
         // Creates an admin dictionary
         Map admins = new HashMap();
 
         //Creates a employee-salary dictionary
-        Map salaries = new HashMap();
+        Map employeeSalaryRecord = new HashMap<>();
 
         //Creates a payPeriod-Salary dictionary
-        Map payPeriodSalaries = new HashMap();
+        Map salaryRecord = new HashMap();
+
+        Map<String, ArrayList<Employee>> stores = new HashMap();
+
+        ArrayList<Employee> listOfEmplyees = null;
 
         boolean flag = false;
 
+
         // Pointers to lines for reading
-        ReadData(employees, admins, payPeriodSalaries, salaries);
+        readData(employees, admins, salaryRecord, employeeSalaryRecord, stores, listOfEmplyees);
 
 
         do {
@@ -65,7 +73,11 @@ public class Payroll {
                             System.out.println("1: Add a new employee");
                             System.out.println("2: Payroll Calculation.");
                             System.out.println("3. Modify an employee's info.");
-                            System.out.println("4: Close the program.");
+                            System.out.println("4: Payroll Records.");
+                            System.out.println("5: Get employee list of a store.");
+                            System.out.println("6: Add an existing employee to a store.");
+                            System.out.println("7: Remove an existing employee from a store.");
+                            System.out.println("8: Close the program.");
                             int pick = kb.nextInt();
                             kb.nextLine();
 
@@ -83,19 +95,35 @@ public class Payroll {
 
                                 try {
                                     newEmp.setWage(wage);
-                                } catch (MinWageException e) {
+                                } catch (LessThanMinWageException e) {
                                     System.out.println("Entered wage is less than the minimum wage!!!");
                                     System.out.println("Wage set to default(12.65)");
                                     newEmp.setWage(12.65);
-                                }
+                                } finally {
 
-                                kb.nextLine();
-                                System.out.println("Enter employee's start year: ");
-                                newEmp.setStartYear(kb.nextLine());
-                                employees.put(newEmp.getID(), newEmp);
-                                System.out.println("\nYou entered the following information: ");
-                                newEmp.getInfo();
-                                newEmp.write();
+                                    kb.nextLine();
+                                    System.out.println("Enter employee's start year: ");
+                                    newEmp.setStartYear(kb.nextLine());
+                                    System.out.println("Enter the store code: ");
+                                    String storeCode = kb.nextLine();
+                                    newEmp.setStoreCode(storeCode);
+                                    CompanyStore companyStore = new CompanyStore(storeCode, newEmp);
+                                    employees.put(newEmp.getID(), newEmp);
+
+                                    if (stores.containsKey(storeCode)) {
+                                        ArrayList<Employee> tempEmp = stores.get(storeCode);
+                                        tempEmp.add((Employee) newEmp);
+                                        stores.put(storeCode, tempEmp);
+
+                                    } else {
+                                        ArrayList<Employee> tempEmp = new ArrayList<>();
+                                        tempEmp.add((Employee) newEmp);
+                                        stores.put(storeCode, tempEmp);
+                                    }
+                                    System.out.println("\nYou entered the following information: ");
+                                    newEmp.getInfo();
+                                    newEmp.write();
+                                }
 
 
                                 check = true;
@@ -106,20 +134,33 @@ public class Payroll {
                             // Deals with option 2
                             else if (pick == 2) {
                                 Salary currenSalary;
-                                double currentWorkingHours;
+                                double currentWorkingHours = 0.0;
                                 System.out.println("Enter the employee's ID: ");
                                 String payId = kb.nextLine();
                                 String payPeriod;
                                 if (employees.containsKey(payId)) {
                                     System.out.println("Enter the number of hours for the pay period: ");
-                                    currentWorkingHours = kb.nextDouble();
-                                    System.out.println("Enter the pay period: ");
+                                    boolean error = false;
+                                    do {
+                                        try {
+                                            currentWorkingHours = kb.nextDouble();
+                                            error = false;
+                                        } catch (InputMismatchException i) {
+                                            kb.nextLine();
+                                            System.out.println("Invalid Input");
+                                            error = true;
+                                        }
+                                    } while (error);
+                                    System.out.println("Enter the pay period (dd/mm/yyyy to dd/mm/yyyy): ");
                                     kb.nextLine();
                                     payPeriod = kb.nextLine();
                                     currenSalary = new Salary((Employee) employees.get(payId), currentWorkingHours,
                                             payPeriod);
                                     currenSalary.write();
                                     currenSalary.earnings();
+
+                                    salaryRecord.put(payPeriod, currenSalary);
+                                    employeeSalaryRecord.put(payId, salaryRecord);
 
                                 } else {
                                     System.out.println("ID does not exist!!! Please try again.");
@@ -157,7 +198,7 @@ public class Payroll {
                                             System.out.println("Please enter the new wage per hour: ");
                                             try {
                                                 emp.setWage(kb.nextFloat());
-                                            } catch (MinWageException e) {
+                                            } catch (LessThanMinWageException e) {
                                                 System.out.println("Entered wage is less than the minimum wage!!!");
                                                 System.out.println("Wage set to default(12.65)");
                                                 emp.setWage(12.65);
@@ -176,10 +217,75 @@ public class Payroll {
                                     System.out.println("ID not Found!!");
                                 }
                                 check = true;
+                            } else if (pick == 4) {
+
+                                System.out.println("Enter the Employee's ID: ");
+                                String id = kb.nextLine();
+                                if (employeeSalaryRecord.containsKey(id)) {
+                                    System.out.println("Enter the wage period(dd/mm/yyyy to dd/mm/yyyy): ");
+                                    String wagePeriod = kb.nextLine();
+                                    Map salaryRecords = (Map) employeeSalaryRecord.get(id);
+                                    if (salaryRecord.containsKey(wagePeriod)) {
+                                        Salary neededRecord = (Salary) salaryRecord.get(wagePeriod);
+                                        neededRecord.earnings();
+                                    } else {
+                                        System.out.println("No record found!!!");
+                                    }
+                                } else {
+                                    System.out.println("ID not found!!");
+                                }
+
+                                check = true;
+
                             }
 
                             // Deals with option 4
-                            else if (pick == 4) {
+                            else if (pick == 5) {
+                                System.out.println("Enter the store code: ");
+                                String storeCode = kb.nextLine();
+                                if(stores.containsKey(storeCode)){
+                                System.out.println("List of employees: ");
+                                if (stores.containsKey(storeCode)) {
+                                    ArrayList<Employee> emp = stores.get(storeCode);
+                                    for (Employee e : emp) {
+                                        System.out.println("Name: " + e.getName() + "     ID: " + e.getID());
+                                    }
+                                }}else {
+                                    System.out.println("Store not found!!!");
+                                }
+                                check = true;
+                            } else if (pick == 6) {
+                                System.out.println("Enter the employee's id: ");
+                                String id = kb.nextLine();
+                                if (employees.containsKey(id)) {
+
+                                    Employee emp = (Employee) employees.get(id);
+                                    System.out.println("Enter the store number: ");
+                                    String store = kb.nextLine();
+                                    CompanyStore comp = new CompanyStore(store);
+                                    emp.addStore(comp);
+                                    emp.write();
+                                    emp.getInfo();
+                                } else {
+                                    System.out.println("ID not found!!!");
+                                }
+                                check = true;
+                            } else if (pick == 7) {
+                                System.out.println("Enter the employee's id: ");
+                                String id = kb.nextLine();
+                                if (employees.containsKey(id)) {
+                                    Employee emp = (Employee) employees.get(id);
+                                    System.out.println("Enter the store number: ");
+                                    String store = kb.nextLine();
+                                    CompanyStore comp = new CompanyStore(store);
+                                    emp.removeStore(comp);
+                                    emp.write();
+                                    emp.getInfo();
+                                } else {
+                                    System.out.println("ID not found!!!");
+                                }
+                                check = true;
+                            } else if (pick == 8) {
                                 check = false;
                             }
 
@@ -227,22 +333,37 @@ public class Payroll {
                     double wageAdm = kb.nextFloat();
                     try {
                         newAdmin.setWage(wageAdm);
-                    } catch (MinWageException e) {
+                    } catch (LessThanMinWageException e) {
                         System.out.println("Entered wage is less than the minimum wage!!!");
                         System.out.println("Wage set to default(12.65)");
                         newAdmin.setWage(12.65);
-                    } finally {
-                        kb.nextLine();
-                        System.out.println("Enter Admin's start date: ");
-                        newAdmin.setStartYear(kb.nextLine());
-                        admins.put(newAdmin.getID(), newAdmin.getPassword());
-                        newAdmin.getInfo();
-                        Employee adm = new Employee(newAdmin.getName(), newAdmin.getID(), newAdmin.getPosition(), newAdmin.getWage(), newAdmin.getStartYear());
-                        employees.put(newAdmin.getID(), adm);
-                        newAdmin.write();
-                        adm.write();
-
                     }
+
+                    kb.nextLine();
+                    System.out.println("Enter Admin's start year: ");
+                    newAdmin.setStartYear(kb.nextLine());
+                    System.out.println("Enter the store code: ");
+                    String storeCode = kb.nextLine();
+                    newAdmin.setStoreCode(storeCode);
+                    CompanyStore companyStore = new CompanyStore(storeCode);
+
+                    admins.put(newAdmin.getID(), newAdmin.getPassword());
+
+                    newAdmin.getInfo();
+                    newAdmin.setEmployee(companyStore);
+                    Employee adm = newAdmin.getEmp();
+                    if (stores.containsKey(storeCode)) {
+                        ArrayList<Employee> tempEmp = stores.get(storeCode);
+                        tempEmp.add(adm);
+                        stores.put(storeCode, tempEmp);
+
+                    } else {
+                        ArrayList<Employee> tempEmp = new ArrayList<>();
+                        tempEmp.add(adm);
+                        stores.put(storeCode, tempEmp);
+                    }
+                    employees.put(newAdmin.getID(), adm);
+                    newAdmin.write();
 
                 } else {
                     System.out.println("Wrong Authorization Key!!");
@@ -268,7 +389,8 @@ public class Payroll {
 
     }
 
-    private static void ReadData(Map employees, Map admins, Map payPeriodSalaries, Map salaries) throws IOException, MinWageException {
+    private static void readData(Map employees, Map admins, Map salaryRecord, Map employeeSalaryRecord, Map<String, ArrayList<Employee>> stores, ArrayList listOfEmployees) throws
+            IOException, LessThanMinWageException {
         List<String> adm = Files.readAllLines(Paths.get("adminInfo.txt"));
         List<String> emps = Files.readAllLines(Paths.get("empInfo.txt"));
         List<String> wageRecords = Files.readAllLines(Paths.get("WageRecord.txt"));
@@ -285,22 +407,42 @@ public class Payroll {
         // Makes an array out of the read line and add key/value to employees
         for (String line : emps) {
             ArrayList<String> partsOfEmp = splitOnComma(line);
-            employees.put(EncryptDecrypt.decrypt(partsOfEmp.get(1)),
-                    new Employee(EncryptDecrypt.decrypt(partsOfEmp.get(0)), EncryptDecrypt.decrypt(partsOfEmp.get(2)),
-                            EncryptDecrypt.decrypt(partsOfEmp.get(1)), Double.parseDouble(partsOfEmp.get(3)),
-                            partsOfEmp.get(4)));
+            Employee employee = new Employee(EncryptDecrypt.decrypt(partsOfEmp.get(0)), EncryptDecrypt.decrypt(partsOfEmp.get(2)),
+                    EncryptDecrypt.decrypt(partsOfEmp.get(1)), Double.parseDouble(partsOfEmp.get(3)),
+                    partsOfEmp.get(4), partsOfEmp.get(5), new CompanyStore(partsOfEmp.get(5)));
+            for (int i = 5; i < partsOfEmp.size(); i++) {
+                if (partsOfEmp.get(i) != null) {
+                    if (stores.containsKey(partsOfEmp.get(i))) {
+                        ArrayList<Employee> empList = stores.get(partsOfEmp.get(i));
+                        empList.add(employee);
+                        stores.put(partsOfEmp.get(i), empList);
+                    } else {
+                        ArrayList<Employee> tempList = new ArrayList<>();
+                        tempList.add(employee);
+                        employee.addStore(new CompanyStore(partsOfEmp.get(i)));
+                        stores.put(partsOfEmp.get(i), tempList);
+                    }
+
+                }
+            }
+            employees.put(EncryptDecrypt.decrypt(partsOfEmp.get(1)), employee
+            );
+
 
         }
 
         // Makes an array out of the read line and add key/value to salaries
         for (String line : wageRecords) {
             ArrayList<String> partsofWageRecords = splitOnComma(line);
-            Object temp = payPeriodSalaries.put(partsofWageRecords.get(3),
+            salaryRecord.put(partsofWageRecords.get(3)/*pay period*/,
                     new Salary(EncryptDecrypt.decrypt(partsofWageRecords.get(0)), partsofWageRecords.get(1),
                             partsofWageRecords.get(2), partsofWageRecords.get(3), partsofWageRecords.get(4),
                             partsofWageRecords.get(5), partsofWageRecords.get(6), partsofWageRecords.get(7),
                             partsofWageRecords.get(8)));
-            salaries.put(partsofWageRecords.get(1), temp);
+
+            employeeSalaryRecord.put(partsofWageRecords.get(1)/*id*/, salaryRecord);
+
+
         }
 
     }
