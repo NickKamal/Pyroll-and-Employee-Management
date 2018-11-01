@@ -2,7 +2,7 @@ package model;
 
 import Exceptions.LessThanMinWageException;
 
-public abstract class Worker implements BioRecords, WageRecords {
+public abstract class Worker implements BioRecords {
 
     protected String name;
     protected String position;

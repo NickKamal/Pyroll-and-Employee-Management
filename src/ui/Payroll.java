@@ -72,7 +72,7 @@ public class Payroll {
                             System.out.println("Please enter one of the following options (1, 2, 3, or 4): ");
                             System.out.println("1: Add a new employee");
                             System.out.println("2: Payroll Calculation.");
-                            System.out.println("3. Modify an employee's info.");
+                            System.out.println("3. View or Modify an employee's info.");
                             System.out.println("4: Payroll Records.");
                             System.out.println("5: Get employee list of a store.");
                             System.out.println("6: Add an existing employee to a store.");
@@ -174,10 +174,11 @@ public class Payroll {
                                 String id = kb.nextLine();
                                 if (employees.containsKey(id)) {
                                     Employee emp = (Employee) employees.get(id);
-                                    System.out.println("Choose one of the following options (1, 2, or 3):");
+                                    System.out.println("Choose one of the following options (1, 2, 3, or 4):");
                                     System.out.println("1. Change the employee's name: ");
                                     System.out.println("2. Change the employee's position: ");
                                     System.out.println("3. Change the employee's wage per hour; ");
+                                    System.out.println("4. View the employee's info: ");
                                     int input = kb.nextInt();
                                     kb.nextLine();
                                     switch (input) {
@@ -194,6 +195,7 @@ public class Payroll {
                                             emp.getInfo();
                                             break;
                                         }
+
                                         case 3: {
                                             System.out.println("Please enter the new wage per hour: ");
                                             try {
@@ -206,6 +208,11 @@ public class Payroll {
                                                 emp.getInfo();
                                                 break;
                                             }
+
+                                        }
+                                        case 4: {
+                                            emp.getInfo();
+                                            break;
 
                                         }
                                         default: {
@@ -321,7 +328,7 @@ public class Payroll {
                 // If authorized then creates a new admin profile
                 if (authKey.equals("SuperStore1517")) {
                     Adminsitration newAdmin = new Adminsitration();
-                    System.out.println("Choose a User Name: ");
+                    System.out.println("Enter the name of the Admin: ");
                     newAdmin.setName(kb.nextLine());
                     System.out.println("Choose a password: ");
                     newAdmin.setPassword(kb.nextLine());
