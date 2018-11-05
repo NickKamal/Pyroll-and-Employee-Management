@@ -28,8 +28,7 @@ public class EncryptDecrypt {
             }
             i++;
         }
-        String k = new String(st);
-        return k;
+        return new String(st);
     }
 
 
@@ -58,8 +57,7 @@ public class EncryptDecrypt {
             }
             i++;
         }
-        String k = new String(st);
-        return k;
+        return new String(st);
     }
 
 

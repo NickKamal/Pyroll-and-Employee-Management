@@ -2,25 +2,24 @@ package model;
 
 import Exceptions.LessThanMinWageException;
 
-public abstract class Worker implements BioRecords {
+public abstract class Worker {
 
-    protected String name;
-    protected String position;
-    protected String id;
-    protected double wagePerHour;
-    protected String startYear;
+    String name;
+    String position;
+    String id;
+    double wagePerHour;
+    String startYear;
 
 
-    protected String storeCode;
-    private double MINWAGE = 12.65;
+    String storeCode;
 
     //EFFECTS: return the store code associated with the employee
-    public String getStoreCode() {
+    String getStoreCode() {
         return storeCode;
     }
 
     //MODIFIES: this
-    //EFFECTS: sets the storCode to the given argument
+    //EFFECTS: sets the storeCode to the given argument
     public void setStoreCode(String storeCode) {
 
         this.storeCode = storeCode;
@@ -52,6 +51,7 @@ public abstract class Worker implements BioRecords {
     //MODIFIES: this
     //EFFECTS: set the wage to the given argument
     public void setWage(double wagePerHour) throws LessThanMinWageException {
+        double MINWAGE = 12.65;
         if (wagePerHour < MINWAGE){
             throw new LessThanMinWageException();
         }
@@ -86,11 +86,9 @@ public abstract class Worker implements BioRecords {
     public void setStartYear(String date){
         this.startYear = date;
     }
-    public String getStartYear(){
+    String getStartYear(){
         return startYear;
     }
-    public void wageRecord(){}
-    public void getCurrentPeriodWage(){}
 
 
     //EFFECTS: returns full

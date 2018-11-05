@@ -5,16 +5,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AdminTest {
+class AdminTest {
 
-    private Adminsitration admin;
+    private Administration admin;
     @BeforeEach
-    public void runBefore() throws LessThanMinWageException {
-        admin = new Adminsitration();
+    void runBefore() {
+        admin = new Administration();
     }
 
     @Test
-    public void testUserInfo() throws LessThanMinWageException {
+    void testUserInfo() throws LessThanMinWageException {
         admin.setID("ab");
         admin.setPassword("abc");
         admin.setWage(20.4);

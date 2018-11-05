@@ -4,65 +4,64 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestEncryptDecrypt {
+class TestEncryptDecrypt {
 
-    EncryptDecrypt ende;
     @BeforeEach
-    public void doIt(){
-        ende = new EncryptDecrypt();
+    void doIt(){
+        EncryptDecrypt ende = new EncryptDecrypt();
 
     }
 
     @Test
-    public void testDecrypt(){
+    void testDecrypt(){
 
         String s = "JGNNQ";
-        String e = ende.decrypt(s);
+        String e = EncryptDecrypt.decrypt(s);
         assertEquals("HELLO", e);
 
     }
 
     @Test
-    public void testEncryptMiddle(){
+    void testEncryptMiddle(){
 
         String s = "HELLO";
-        String e = ende.encrypt(s);
+        String e = EncryptDecrypt.encrypt(s);
         assertEquals("JGNNQ", e);
 
     }
 
     @Test
-    public void testEncryptEnds(){
+    void testEncryptEnds(){
 
         String s = "XYZ";
-        String e = ende.encrypt(s);
+        String e = EncryptDecrypt.encrypt(s);
         assertEquals("ZAB", e);
 
     }
 
     @Test
-    public void testDecryptEnds(){
+    void testDecryptEnds(){
 
         String s = "ZAB";
-        String e = ende.decrypt(s);
+        String e = EncryptDecrypt.decrypt(s);
         assertEquals("XYZ", e);
 
     }
 
     @Test
-    public void testEncryptNum(){
+    void testEncryptNum(){
 
         String s = "X123";
-        String e = ende.encrypt(s);
+        String e = EncryptDecrypt.encrypt(s);
         assertEquals("Z123", e);
 
     }
 
     @Test
-    public void testDecryptNum(){
+    void testDecryptNum(){
 
         String s = "Z123";
-        String e = ende.decrypt(s);
+        String e = EncryptDecrypt.decrypt(s);
         assertEquals("X123", e);
 
     }

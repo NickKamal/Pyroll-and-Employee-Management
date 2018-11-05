@@ -4,20 +4,18 @@ import model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class EmployeeTest {
+class EmployeeTest {
 
     private Employee emp;
     @BeforeEach
-    public void runBefore()
+    void runBefore()
     {
         emp = new Employee();
     }
 
     @Test
-    public void testUserInfo() throws LessThanMinWageException {
+    void testUserInfo() throws LessThanMinWageException {
         emp.setPosition("ab");
         emp.setWage(20.3);
 

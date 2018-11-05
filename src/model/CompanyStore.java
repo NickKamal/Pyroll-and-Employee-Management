@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class CompanyStore {
-    private ArrayList<Employee> listOfEmployees = new ArrayList<>();
-    private String myStoreCode;
+    private final ArrayList<Employee> listOfEmployees = new ArrayList<>();
+    private final String myStoreCode;
 
     public void addEmployee(Employee emp){
         if (!listOfEmployees.contains(emp)){
@@ -13,9 +13,9 @@ public class CompanyStore {
             emp.addStore(this);
         }
     }
-    public CompanyStore(String storeCode, BioRecords employee){
+    public CompanyStore(String storeCode, Employee employee){
         myStoreCode = storeCode;
-        addEmployee((Employee) employee);
+        addEmployee(employee);
     }
 
     @Override

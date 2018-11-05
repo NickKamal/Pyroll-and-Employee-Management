@@ -1,7 +1,6 @@
 package Tests;
 
 import Exceptions.LessThanMinWageException;
-import model.BioRecords;
 import model.CompanyStore;
 import model.Employee;
 import org.junit.Test;
@@ -12,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class TestLessThanMinWageException {
     Scanner kb = new Scanner(System.in);
-    BioRecords newEmp;
-    CompanyStore companyStore = new CompanyStore("2247");
+    private Employee newEmp;
+    private final CompanyStore companyStore = new CompanyStore("2247");
 
     @Test
     public void TestLessThanMinWageExpectException() {

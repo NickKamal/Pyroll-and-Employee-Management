@@ -6,8 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
-public class Adminsitration extends Worker{
+public class Administration extends Worker {
     /**
      * Creates an Administration profile in the system.
      */
@@ -22,7 +23,7 @@ public class Adminsitration extends Worker{
         try {
             employee = new Employee(name, position, id, wagePerHour, startYear, storeCode, companyStore);
             employee.write();
-        }  catch (LessThanMinWageException e) {
+        }  catch (LessThanMinWageException ignored) {
         } catch (IOException e) {
             System.out.println("Unable to write in the file!!!\nPlease restart the program and try again!!");
         }
@@ -46,21 +47,9 @@ public class Adminsitration extends Worker{
         return employee;
     }
 
-    //EFFECTS: returns full info
-    public void getInfo()
-    {
-        System.out.println("You entered the following info:");
-        System.out.println("Admin's Name: " + name);
-        System.out.println("Admin's Id: " + id);
-        System.out.println("Admin's Position: " + position);
-        System.out.println("Admn's Wage: " + wagePerHour);
-        System.out.println("Start Date: " + startYear);
 
-    }
-
-    @Override
-    public void write() throws FileNotFoundException, UnsupportedEncodingException {
-            PrintWriter writer = new PrintWriter("adminInfo.txt","UTF-8");
+    public void write() throws IOException {
+            PrintWriter writer = new PrintWriter("adminInfo.txt", StandardCharsets.UTF_8);
             writer.println(EncryptDecrypt.encrypt(getName()) + ","
                     + EncryptDecrypt.encrypt(getID()) + "," + EncryptDecrypt.encrypt(getPosition())
                     + "," + getWage() + "," + getStartYear() + "," + EncryptDecrypt.encrypt(getPassword()) + "," + getStoreCode() + ",");

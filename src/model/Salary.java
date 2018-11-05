@@ -6,21 +6,19 @@ import java.io.PrintWriter;
 
 public class Salary {
 
-    private final double CPP_REDUCTON_RATE = 0.02;
-    private final double EI_REDUCTION_RATE = 0.025;
     private final double OVERTIME_RATE = 1.5;
-    private String name;
-    private String ID;
-    private double wageRate;
+    private final String name;
+    private final String ID;
+    private final double wageRate;
     private double totalHours;
-    private String payPeriod;
+    private final String payPeriod;
     private double regularHours = 0;
     private double overTimeHours = 0;
 
-    private double totalWage;
-    private double netWage;
-    private double EI;
-    private double CPP_QPP;
+    private final double totalWage;
+    private final double netWage;
+    private final double EI;
+    private final double CPP_QPP;
     private double overTimeWage;
     private double regularWage;
 
@@ -59,19 +57,21 @@ public class Salary {
     }
 
 
-    public double CPP_QPP(double wage) {
-        return (wage * CPP_REDUCTON_RATE);
+    private double CPP_QPP(double wage) {
+        double CPP_REDUCTION_RATE = 0.02;
+        return (wage * CPP_REDUCTION_RATE);
     }
 
-    public double EI(double wage) {
+    private double EI(double wage) {
+        double EI_REDUCTION_RATE = 0.025;
         return (int)(wage * EI_REDUCTION_RATE * 100) / 100.0;
     }
 
-    public double netWage(double wage) {
+    private double netWage(double wage) {
         return (int)((wage - CPP_QPP(wage) - EI(wage)) * 100) / 100.0;
     }
 
-    public double totalWage(double hours) {
+    private double totalWage(double hours) {
         if (totalHours <= 80){
         return hours * wageRate;}
         else {
@@ -79,11 +79,11 @@ public class Salary {
         }
     }
 
-    public double overTimeWage(double overTimeHours) {
+    private double overTimeWage(double overTimeHours) {
         return overTimeHours * 1.5 * wageRate;
     }
 
-    public double regularWage(double regularHours) {
+    private double regularWage(double regularHours) {
         return regularHours * wageRate;
     }
 

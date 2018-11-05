@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Employee extends Worker {
 
 
-    private ArrayList<CompanyStore> stores = new ArrayList<>();
+    private final ArrayList<CompanyStore> stores = new ArrayList<>();
     private CompanyStore com;
 
     public Employee(String s1, String s2, String s3, double d, String s4, String s5, CompanyStore companyStore) throws LessThanMinWageException {
@@ -41,7 +41,7 @@ public class Employee extends Worker {
                 "," + EncryptDecrypt.encrypt(getPosition()) + "," + getWage()
                 + "," + getStartYear() + "," + getStoreCode() + ",");
         for (CompanyStore companyStore : stores) {
-            if (companyStore.getStoreCode() != storeCode) {
+            if (!Objects.equals(companyStore.getStoreCode(), storeCode)) {
                 writer.print(companyStore.getStoreCode() + ",");
 
             }
@@ -73,7 +73,7 @@ public class Employee extends Worker {
     }
 
 
-    public void getStore() {
+    private void getStore() {
         for (CompanyStore companyStore : stores) {
             System.out.println("Store no. : " + companyStore.getStoreCode());
         }
