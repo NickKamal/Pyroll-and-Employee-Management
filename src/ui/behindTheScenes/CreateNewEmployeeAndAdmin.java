@@ -1,4 +1,4 @@
-package ui;
+package ui.behindTheScenes;
 
 import Exceptions.LessThanMinWageException;
 import model.Administration;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
-class CreateNewEmployeeAndAdmin {
+public class CreateNewEmployeeAndAdmin {
 
     //EFFECTS: Creates a new Admin
     public static void makeNewAdmin(Scanner kb, Map employees, Map admins, Map<String, ArrayList<Employee>> stores)

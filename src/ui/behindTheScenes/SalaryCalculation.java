@@ -1,4 +1,4 @@
-package ui;
+package ui.behindTheScenes;
 
 import model.Employee;
 import model.Salary;
@@ -8,7 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
-class SalaryCalculation {
+public class SalaryCalculation {
 
     //EFFECTS: Calculates, stores and prints the salary of the given employee a
     public static void calculateSalary(Scanner kb, Map employees, Map employeeSalaryRecord, Map salaryRecord)

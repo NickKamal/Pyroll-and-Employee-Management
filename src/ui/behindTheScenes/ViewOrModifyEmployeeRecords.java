@@ -1,4 +1,4 @@
-package ui;
+package ui.behindTheScenes;
 
 import Exceptions.LessThanMinWageException;
 import model.Employee;
@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
-import static ui.CreateNewEmployeeAndAdmin.tryThrowAndHandleMinWageException;
+import static ui.behindTheScenes.CreateNewEmployeeAndAdmin.tryThrowAndHandleMinWageException;
 
-class ViewOrModifyEmployeeRecords {
+public class ViewOrModifyEmployeeRecords {
 
     //EFFECTS: prints the sa;ary records of the given employee
     public static void showMeThePayRecords(Scanner kb, Map employeeSalaryRecord, Map salaryRecord) {

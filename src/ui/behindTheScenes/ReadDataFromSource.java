@@ -1,4 +1,4 @@
-package ui;
+package ui.behindTheScenes;
 
 import Exceptions.LessThanMinWageException;
 import model.*;
@@ -8,7 +8,7 @@ import java.net.URL;
 import java.nio.file.*;
 import java.util.*;
 
-class ReadDataFromSource {
+public class ReadDataFromSource {
 
     public static void readData(Map employees, Map admins, Map salaryRecord, Map employeeSalaryRecord,
                                 Map<String, ArrayList<Employee>> stores) throws

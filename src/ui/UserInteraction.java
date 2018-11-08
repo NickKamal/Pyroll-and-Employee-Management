@@ -7,17 +7,11 @@ import model.*;
 import java.io.IOException;
 import java.util.*;
 
-import static ui.CreateNewEmployeeAndAdmin.createAnEmployee;
-import static ui.CreateNewEmployeeAndAdmin.makeNewAdmin;
-import static ui.ReadDataFromSource.readData;
-import static ui.ReadDataFromSource.readWebPage;
-import static ui.SalaryCalculation.calculateSalary;
-import static ui.StoreEmployeeRelation.addEmployeeToStore;
-import static ui.StoreEmployeeRelation.giveTheStoreEmployeeList;
-import static ui.StoreEmployeeRelation.removeEmployeeFromStore;
-import static ui.ViewOrModifyEmployeeRecords.showMeThePayRecords;
-import static ui.ViewOrModifyEmployeeRecords.viewOrModifyEmployeeInfo;
-
+import static ui.behindTheScenes.CreateNewEmployeeAndAdmin.*;
+import static ui.behindTheScenes.ReadDataFromSource.*;
+import static ui.behindTheScenes.SalaryCalculation.calculateSalary;
+import static ui.behindTheScenes.StoreEmployeeRelation.*;
+import static ui.behindTheScenes.ViewOrModifyEmployeeRecords.*;
 
 class UserInteraction {
 

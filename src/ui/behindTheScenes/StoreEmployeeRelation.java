@@ -1,4 +1,4 @@
-package ui;
+package ui.behindTheScenes;
 
 import model.CompanyStore;
 import model.Employee;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
-class StoreEmployeeRelation {
+public class StoreEmployeeRelation {
 
     //EFFECTS: Removes employee from the  given store
     public static void removeEmployeeFromStore(Scanner kb, Map employees) throws IOException {
