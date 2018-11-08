@@ -1,7 +1,7 @@
 package observer;
 
-public abstract class Observer {
+abstract class Observer {
 
-    protected Subject subject;
+    Subject subject;
     public abstract void update();
 }

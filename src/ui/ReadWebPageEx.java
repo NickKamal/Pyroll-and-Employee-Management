@@ -6,9 +6,9 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ReadWebPageEx {
+class ReadWebPageEx {
 
-    public static void main(String[] args) throws MalformedURLException, IOException {
+    public static void main(String[] args) throws IOException {
 
         BufferedReader br = null;
 

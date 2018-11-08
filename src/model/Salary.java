@@ -6,7 +6,6 @@ import java.io.PrintWriter;
 
 public class Salary {
 
-    private final double OVERTIME_RATE = 1.5;
     private final String name;
     private final String ID;
     private final double wageRate;
@@ -80,6 +79,7 @@ public class Salary {
     }
 
     private double overTimeWage(double overTimeHours) {
+        double OVERTIME_RATE = 1.5;
         return overTimeHours * OVERTIME_RATE * wageRate;
     }
 
@@ -100,9 +100,9 @@ public class Salary {
             System.out.println("Total hours: " + totalHours);
         }
         System.out.println("Total Earnings: " + totalWage);
-        System.out.println("E.I Reduction: " + EI);
-        System.out.println("C.P.P/Q.P.P Reduction: " + CPP_QPP);
-        System.out.println("Total reductions: " + EI + CPP_QPP);
+        System.out.println("E.I Reduction: " + (int)(EI* 100) / 100.0);
+        System.out.println("C.P.P/Q.P.P Reduction: " + (int)(CPP_QPP* 100) / 100.0);
+        System.out.println("Total reductions: " + (int)((EI + CPP_QPP)* 100) / 100.0);
         System.out.println("Net Wage: " + netWage);
 
     }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Subject {
 
-    List<Observer> observers = new ArrayList<>();
+    private final List<Observer> observers = new ArrayList<>();
 
     public void addObserver(Observer observer) {
         if (!observers.contains(observer)) {
