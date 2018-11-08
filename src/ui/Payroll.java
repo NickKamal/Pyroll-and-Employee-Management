@@ -3,7 +3,11 @@ package ui;
 
 import Exceptions.LessThanMinWageException;
 import model.*;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -12,6 +16,7 @@ import java.nio.file.Paths;
 class Payroll {
 
     public static void main(String[] args) throws IOException, LessThanMinWageException {
+        readWebPage();
         // Initialize a scanner object
         Scanner kb = new Scanner(System.in);
 
@@ -32,7 +37,6 @@ class Payroll {
 
         //flag for the main menu
         boolean flag = false;
-
 
         // Pointers to lines for reading
         readData(employees, admins, salaryRecord, employeeSalaryRecord, stores);
@@ -451,5 +455,32 @@ class Payroll {
         return new ArrayList<>(Arrays.asList(splits));
 
 
+    }
+
+    public static void readWebPage() throws IOException {
+        BufferedReader br = null;
+
+        try {
+            String theURL = "https://www.ugrad.cs.ubc.ca/~cs210/2018w1/welcomemsg.html"; //this can point to any URL
+            URL url = new URL(theURL);
+            br = new BufferedReader(new InputStreamReader(url.openStream()));
+
+            String line;
+
+            StringBuilder sb = new StringBuilder();
+
+            while ((line = br.readLine()) != null) {
+
+                sb.append(line);
+                sb.append(System.lineSeparator());
+            }
+
+            System.out.println(sb);
+        } finally {
+
+            if (br != null) {
+                br.close();
+            }
+        }
     }
 }

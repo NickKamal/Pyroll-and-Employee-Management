@@ -1,11 +1,8 @@
 package model;
 
 import Exceptions.LessThanMinWageException;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 public class Administration extends Worker {
@@ -55,12 +52,6 @@ public class Administration extends Worker {
                     + "," + getWage() + "," + getStartYear() + "," + EncryptDecrypt.encrypt(getPassword()) + "," + getStoreCode() + ",");
             writer.close();
         }
-
-    @Override
-    public void setStoreCode(String storeCode) {
-        this.storeCode = storeCode;
-
-    }
 
 
 }

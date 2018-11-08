@@ -80,7 +80,7 @@ public class Salary {
     }
 
     private double overTimeWage(double overTimeHours) {
-        return overTimeHours * 1.5 * wageRate;
+        return overTimeHours * OVERTIME_RATE * wageRate;
     }
 
     private double regularWage(double regularHours) {
