@@ -1,14 +1,13 @@
 package ui.behindTheScenes;
-
+import observer.*;
 import model.CompanyStore;
 import model.Employee;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
-public class StoreEmployeeRelation {
+public class StoreEmployeeRelation extends Subject {
 
     //EFFECTS: Removes employee from the  given store
     public static void removeEmployeeFromStore(Scanner kb, Map employees) throws IOException {
@@ -20,6 +19,8 @@ public class StoreEmployeeRelation {
             String store = kb.nextLine();
             CompanyStore comp = new CompanyStore(store);
             emp.removeStore(comp);
+            observers.add(emp);
+            notifyObserver();
             emp.write();
             emp.getInfo();
         } else {
@@ -37,6 +38,8 @@ public class StoreEmployeeRelation {
             String store = kb.nextLine();
             CompanyStore comp = new CompanyStore(store);
             emp.addStore(comp);
+            observers.add(emp);
+            notifyObserver();
             emp.write();
             emp.getInfo();
         } else {

@@ -2,7 +2,6 @@ package ui.behindTheScenes;
 
 import Exceptions.LessThanMinWageException;
 import model.*;
-
 import java.io.*;
 import java.net.URL;
 import java.nio.file.*;

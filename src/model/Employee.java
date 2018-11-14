@@ -1,16 +1,18 @@
 package model;
 
 import Exceptions.LessThanMinWageException;
+import observer.Observer;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 public class Employee extends Worker {
 
 
     private final ArrayList<CompanyStore> stores = new ArrayList<>();
     private CompanyStore com;
+    private String update = "";
+
 
     public Employee(String s1, String s2, String s3, double d, String s4, String s5, CompanyStore companyStore) throws LessThanMinWageException {
         name = s1;
@@ -80,6 +82,7 @@ public class Employee extends Worker {
     }
 
     public void getInfo() {
+        System.out.println(update);
         System.out.println("Name: " + name);
         System.out.println("Position: " + position);
         System.out.println("ID: " + id);
@@ -91,4 +94,11 @@ public class Employee extends Worker {
     public CompanyStore getCompanyStore() {
         return com;
     }
+
+    @Override
+    public void update() {
+        update = "There has been an update in employee records!!";
+        Log.addToLog(id, new Date());
+    }
+
 }

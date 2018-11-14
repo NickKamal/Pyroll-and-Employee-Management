@@ -1,8 +1,9 @@
 package model;
 
 import Exceptions.LessThanMinWageException;
+import observer.Observer;
 
-public abstract class Worker {
+public abstract class Worker extends Observer {
 
     String name;
     String position;
@@ -21,9 +22,7 @@ public abstract class Worker {
     //MODIFIES: this
     //EFFECTS: sets the storeCode to the given argument
     public void setStoreCode(String storeCode) {
-
         this.storeCode = storeCode;
-
     }
 
     //MODIFIES: this

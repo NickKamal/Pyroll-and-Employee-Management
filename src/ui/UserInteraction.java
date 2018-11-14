@@ -3,6 +3,7 @@ package ui;
 
 import Exceptions.LessThanMinWageException;
 import model.*;
+import observer.Subject;
 
 import java.io.IOException;
 import java.util.*;
@@ -36,7 +37,7 @@ class UserInteraction {
         Map<String, ArrayList<Employee>> stores = new HashMap();
 
         //flag for the main menu
-        boolean flag = false;
+        boolean flag = true;
 
         // Pointers to lines for reading
         readData(employees, admins, salaryRecord, employeeSalaryRecord, stores);
@@ -48,7 +49,8 @@ class UserInteraction {
             System.out.println("\nPlease enter one of the following options (1, 2, or 3): ");
             System.out.println("1: Administration login.");
             System.out.println("2: Create an administration account.");
-            System.out.println("3: Close the program.");
+            System.out.println("3: Employee login.");
+            System.out.println("4: Close the program.");
             int option = kb.nextInt();
             kb.nextLine();
 
@@ -96,7 +98,6 @@ class UserInteraction {
                             } else if (pick == 5) {
                                 giveTheStoreEmployeeList(kb, stores);
                                 check = true;
-
                             } else if (pick == 6) {
                                 addEmployeeToStore(kb, employees);
                                 check = true;
@@ -111,7 +112,6 @@ class UserInteraction {
                             else {
                                 System.out.println("Invalid input!!!\n");
                                 check = true;
-
                             }
                         } while (check);
                     }
@@ -135,11 +135,22 @@ class UserInteraction {
             else if (option == 2) {
                 makeNewAdmin(kb, employees, admins, stores);
                 flag = true;
-
             }
 
             // Execution if user chooses option 3
             else if (option == 3) {
+                System.out.println("Enter your id: ");
+                String id = kb.nextLine();
+                if (employees.containsKey(id)) {
+                    Employee emp = (Employee) employees.get(id);
+                    emp.getInfo();
+                } else {
+                    System.out.println("ID not found!!!");
+                }
+                flag = true;
+            }
+            // Execution if user chooses option 4
+            else if (option == 4) {
                 flag = false;
             }
 
@@ -148,10 +159,7 @@ class UserInteraction {
                 System.out.println("Invalid Option!");
                 flag = true;
             }
-
-
         } while (flag);
-
-
+        Log.printLog();
     }
 }

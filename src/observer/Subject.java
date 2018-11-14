@@ -1,13 +1,12 @@
 package observer;
 
-import javafx.collections.ObservableList;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.*;
 public class Subject {
 
-    private final List<Observer> observers = new ArrayList<>();
+
+    protected static final List<Observer> observers = new ArrayList<>();
 
     public void addObserver(Observer observer) {
         if (!observers.contains(observer)) {
@@ -15,11 +14,17 @@ public class Subject {
         }
     }
 
-    public void notifyObserver() {
+    public void removeObserver(Observer observer){
+        observers.remove(observer);
+    }
+
+    public static void notifyObserver() {
         for (Observer observer : observers) {
+
             observer.update();
         }
 
     }
+
 
 }

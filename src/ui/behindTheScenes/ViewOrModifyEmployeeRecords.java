@@ -3,14 +3,16 @@ package ui.behindTheScenes;
 import Exceptions.LessThanMinWageException;
 import model.Employee;
 import model.Salary;
+import observer.Subject;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
 import static ui.behindTheScenes.CreateNewEmployeeAndAdmin.tryThrowAndHandleMinWageException;
 
-public class ViewOrModifyEmployeeRecords {
+public class ViewOrModifyEmployeeRecords extends Subject {
 
     //EFFECTS: prints the sa;ary records of the given employee
     public static void showMeThePayRecords(Scanner kb, Map employeeSalaryRecord, Map salaryRecord) {
@@ -44,19 +46,29 @@ public class ViewOrModifyEmployeeRecords {
             System.out.println("2. Change the employee's position: ");
             System.out.println("3. Change the employee's wage per hour; ");
             System.out.println("4. View the employee's info: ");
-            int input = kb.nextInt();
+            int input;
+            try {
+                input = kb.nextInt();
+            } catch (InputMismatchException i) {
+                System.out.println("Invalid input!!");
+                input = 4;
+            }
             kb.nextLine();
             switch (input) {
                 case 1: {
                     System.out.println("Please enter the new name: ");
                     emp.setName(kb.nextLine());
                     emp.getInfo();
+                    observers.add(emp);
+                    notifyObserver();
                     break;
                 }
                 case 2: {
                     System.out.println("Please enter the new position: ");
                     emp.setPosition(kb.nextLine());
                     emp.getInfo();
+                    observers.add(emp);
+                    notifyObserver();
                     break;
                 }
                 case 3: {
@@ -67,6 +79,8 @@ public class ViewOrModifyEmployeeRecords {
                 }
                 case 4: {
                     emp.getInfo();
+                    observers.add(emp);
+                    notifyObserver();
                     break;
                 }
                 default: {

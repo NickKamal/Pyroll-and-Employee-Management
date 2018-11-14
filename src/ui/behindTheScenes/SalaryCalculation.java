@@ -2,13 +2,14 @@ package ui.behindTheScenes;
 
 import model.Employee;
 import model.Salary;
+import observer.Subject;
 
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
-public class SalaryCalculation {
+public class SalaryCalculation extends Subject {
 
     //EFFECTS: Calculates, stores and prints the salary of the given employee a
     public static void calculateSalary(Scanner kb, Map employees, Map employeeSalaryRecord, Map salaryRecord)
@@ -37,6 +38,8 @@ public class SalaryCalculation {
             currentSalary = new Salary((Employee) employees.get(payId), currentWorkingHours,
                     payPeriod);
             currentSalary.write();
+            observers.add((Employee) employees.get(payId));
+            notifyObserver();
             currentSalary.earnings();
             salaryRecord.put(payPeriod, currentSalary);
             employeeSalaryRecord.put(payId, salaryRecord);

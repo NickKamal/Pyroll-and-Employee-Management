@@ -54,5 +54,9 @@ public class Administration extends Worker {
         }
 
 
+    @Override
+    public void update() {
+
+    }
 }
 

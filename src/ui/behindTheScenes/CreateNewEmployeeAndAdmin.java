@@ -1,15 +1,9 @@
 package ui.behindTheScenes;
 
 import Exceptions.LessThanMinWageException;
-import model.Administration;
-import model.CompanyStore;
-import model.Employee;
-import model.Worker;
-
+import model.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class CreateNewEmployeeAndAdmin {
 
