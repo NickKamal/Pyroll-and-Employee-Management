@@ -14,7 +14,7 @@ public abstract class Worker extends Observer {
 
     String storeCode;
 
-    //EFFECTS: return the store code associated with the employee
+    //EFFECTS: return the store code associated with the employee i
     String getStoreCode() {
         return storeCode;
     }
