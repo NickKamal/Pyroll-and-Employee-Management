@@ -1,12 +1,16 @@
 package model;
 
 import Exceptions.LessThanMinWageException;
-import observer.Observer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.util.*;
+
+import static ui.GUI.UI.option1sub;
+
 
 public class Employee extends Worker {
 
@@ -84,20 +88,31 @@ public class Employee extends Worker {
         }
     }
 
-    private String getStore(JFrame frame) {
+    private String getStoreGUI() {
         String[] columnNames = {"",
                 ""};
         Object[][] data;
-        String storeList = "";
+        StringBuilder storeList = new StringBuilder();
         for (CompanyStore companyStore : stores) {
-            storeList += companyStore.getStoreCode() + "\n";
+            storeList.append(companyStore.getStoreCode()).append("\n");
         }
-        return storeList;
+        return storeList.toString();
     }
 
-    public void getInfo(JFrame frame) {
+    public void getInfo(JFrame frame, Scanner kb, Map employees, Map<String, ArrayList<Employee>> store, Map employeeSalaryRecord, Map salaryRecord) {
         JFrame thisFrame = new JFrame("Info");
-        thisFrame.setSize(300,300);
+        thisFrame.setSize(300, 300);
+        thisFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent) {
+                thisFrame.setVisible(false);
+                try {
+                    option1sub(kb, employees, store, employeeSalaryRecord, salaryRecord);
+
+                } catch (Exception ignored) {
+
+                }
+            }
+        });
         thisFrame.setVisible(true);
         String[] columnNames = {"",
                 ""};
@@ -107,10 +122,10 @@ public class Employee extends Worker {
                 {"", "Updated Info"},
                 {"Name: ", name},
                 {"Position: ", position},
-                {"ID: ",id},
+                {"ID: ", id},
                 {"Wage per hour: ", wagePerHour},
                 {"Start Date: ", startYear},
-                {"Store no.: ", getStore(frame)}
+                {"Store no.: ", getStoreGUI()}
         };
 
 
@@ -140,7 +155,10 @@ public class Employee extends Worker {
     @Override
     public void update() {
         update = "There has been an update in employee records!!";
-        Log.addToLog(id, new Date());
+        Log.addToLog(id);
+    }
+    public ArrayList<CompanyStore> getStorList(){
+        return stores;
     }
 
 }

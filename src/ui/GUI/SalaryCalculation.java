@@ -6,14 +6,19 @@ import observer.Subject;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
-public class SalaryCalculation extends Subject {
+import static ui.GUI.UI.option1sub;
+
+class SalaryCalculation extends Subject {
 
     //EFFECTS: Calculates, stores and prints the salary of the given employee a
-    public static void calculateSalary(Scanner kb, Map employees, Map employeeSalaryRecord, Map salaryRecord)
+    public static void calculateSalary(Scanner kb, Map employees, Map employeeSalaryRecord, Map salaryRecord, Map<String, ArrayList<Employee>> stores)
             throws IOException {
         JFrame salaryFrame = new JFrame("Salay Record");
         Salary currentSalary;
@@ -45,8 +50,13 @@ public class SalaryCalculation extends Subject {
             currentSalary.earnings(salaryFrame);
             salaryRecord.put(payPeriod, currentSalary);
             employeeSalaryRecord.put(payId, salaryRecord);
+            salaryFrame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
 
-            salaryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                }
+            });
             salaryFrame.setVisible(true);
 
         } else {

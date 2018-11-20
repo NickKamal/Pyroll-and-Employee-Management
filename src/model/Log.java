@@ -2,14 +2,12 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Log {
-    private static ArrayList<String> log = new ArrayList<>();
+    private static final ArrayList<String> log = new ArrayList<>();
 
 
-    public static void addToLog(String id, Date date){
+    public static void addToLog(String id){
         log.add(id + "->" + new Date());
 
     }

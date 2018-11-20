@@ -14,11 +14,10 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
-public class CreateNewEmployeeAndAdmin {
+class CreateNewEmployeeAndAdmin {
 
     //EFFECTS: Creates a new Admin
-    public static void makeNewAdmin(Scanner kb, Map employees, Map admins, Map<String, ArrayList<Employee>> stores)
-            throws LessThanMinWageException, IOException {
+    public static void makeNewAdmin(Scanner kb, Map employees, Map admins, Map<String, ArrayList<Employee>> stores) {
         System.out.println("Enter Authorization Key: ");
         String authKey = kb.nextLine();
 
@@ -92,7 +91,7 @@ public class CreateNewEmployeeAndAdmin {
                     double wage = Double.parseDouble(wageField.getText());
                     try {
                         tryThrowAndHandleMinWageException(newAdmin, wage);
-                    } catch (LessThanMinWageException e1) {
+                    } catch (LessThanMinWageException ignored) {
                     }
                     newAdmin.setStartYear(yearField.getText());
                     newAdmin.setStoreCode(storeField.getText());
@@ -105,7 +104,7 @@ public class CreateNewEmployeeAndAdmin {
                     employees.put(newAdmin.getID(), adm);
                     try {
                         newAdmin.write();
-                    } catch (IOException e1) {
+                    } catch (IOException ignored) {
                     }
                 }
             });
@@ -118,8 +117,7 @@ public class CreateNewEmployeeAndAdmin {
 
 
     //EFFECTS: Adds a new Employee
-    public static void createAnEmployee(Scanner kb, Map employees, Map<String, ArrayList<Employee>> stores, JFrame adminFrame)
-            throws LessThanMinWageException, IOException {
+    public static void createAnEmployee(Map employees, Map<String, ArrayList<Employee>> stores, JFrame adminFrame) {
 
         Employee newEmp = new Employee();
         String worker = "employee's";
@@ -189,7 +187,7 @@ public class CreateNewEmployeeAndAdmin {
                 double wage = Double.parseDouble(wageField.getText());
                 try {
                     tryThrowAndHandleMinWageException(newEmp, wage);
-                } catch (LessThanMinWageException e1) {
+                } catch (LessThanMinWageException ignored) {
                 }
                 newEmp.setStartYear(yearField.getText());
                 newEmp.setStoreCode(storeField.getText());
@@ -200,7 +198,7 @@ public class CreateNewEmployeeAndAdmin {
                 newEmp.getInfo();
                 try {
                     newEmp.write();
-                } catch (IOException e1) {
+                } catch (IOException ignored) {
                 }
                 getDataFrame.setVisible(false);
                 adminFrame.setVisible(true);
@@ -224,7 +222,7 @@ public class CreateNewEmployeeAndAdmin {
         }
     }
 
-    public static void tryThrowAndHandleMinWageException(Worker x, double wage) throws LessThanMinWageException {
+    private static void tryThrowAndHandleMinWageException(Worker x, double wage) throws LessThanMinWageException {
         try {
             x.setWage(wage);
         } catch (LessThanMinWageException e) {

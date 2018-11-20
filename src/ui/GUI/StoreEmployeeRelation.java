@@ -4,12 +4,19 @@ import model.CompanyStore;
 import model.Employee;
 import observer.Subject;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
-public class StoreEmployeeRelation extends Subject {
+import static ui.GUI.UI.option1sub;
+
+class StoreEmployeeRelation extends Subject {
 
     //EFFECTS: Removes employee from the  given store
     public static void removeEmployeeFromStore(Scanner kb, Map employees) throws IOException {
@@ -50,19 +57,37 @@ public class StoreEmployeeRelation extends Subject {
     }
 
     //EFFECTS: returns the list of employees working in the given store
-    public static void giveTheStoreEmployeeList(Scanner kb, Map<String, ArrayList<Employee>> stores) {
-        System.out.println("Enter the store code: ");
-        String storeCode = kb.nextLine();
+    public static void giveTheStoreEmployeeList(Scanner kb, Map employeeSalaryRecord, Map salaryRecord, Map employees, Map<String, ArrayList<Employee>> stores) {
+
+        String storeCode = JOptionPane.showInputDialog("Enter the store code: ");
+        JFrame storeFrame = new JFrame("List of employees in " + storeCode);
+        storeFrame.setSize(400, 400);
         if (stores.containsKey(storeCode)) {
-            System.out.println("List of employees: ");
+
+            storeFrame.setLayout(new FlowLayout());
+            DefaultTableModel tableModel = new DefaultTableModel();
+            JTable table = new JTable(tableModel);
+            tableModel.addColumn("Employee Name");
+            tableModel.addColumn("Employee ID");
+            storeFrame.add(new JScrollPane(table));
+            storeFrame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+
+                }
+            });
+            storeFrame.setVisible(true);
             if (stores.containsKey(storeCode)) {
                 ArrayList<Employee> emp = stores.get(storeCode);
                 for (Employee e : emp) {
-                    System.out.println("Name: " + e.getName() + "     ID: " + e.getID());
+                    tableModel.addRow(new Object[]{e.getName(), e.getID()});
                 }
             }
         } else {
-            System.out.println("Store not found!!!");
+            JOptionPane.showMessageDialog(storeFrame, "ID not found!!!");
+            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+
         }
     }
 }

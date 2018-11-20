@@ -1,7 +1,5 @@
 package observer;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.*;
 public class Subject {
 
@@ -18,7 +16,7 @@ public class Subject {
         observers.remove(observer);
     }
 
-    public static void notifyObserver() {
+    protected static void notifyObserver() {
         for (Observer observer : observers) {
 
             observer.update();

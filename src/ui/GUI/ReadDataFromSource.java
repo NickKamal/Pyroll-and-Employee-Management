@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class ReadDataFromSource {
+class ReadDataFromSource {
 
     public static void readData(Map employees, Map admins, Map salaryRecord, Map employeeSalaryRecord,
                                 Map<String, ArrayList<Employee>> stores) throws
