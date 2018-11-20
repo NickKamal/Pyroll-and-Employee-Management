@@ -1,5 +1,8 @@
 package model;
 
+import javax.swing.*;
+import javax.swing.table.TableColumn;
+import java.awt.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -63,17 +66,17 @@ public class Salary {
 
     private double EI(double wage) {
         double EI_REDUCTION_RATE = 0.025;
-        return (int)(wage * EI_REDUCTION_RATE * 100) / 100.0;
+        return (int) (wage * EI_REDUCTION_RATE * 100) / 100.0;
     }
 
     private double netWage(double wage) {
-        return (int)((wage - CPP_QPP(wage) - EI(wage)) * 100) / 100.0;
+        return (int) ((wage - CPP_QPP(wage) - EI(wage)) * 100) / 100.0;
     }
 
     private double totalWage(double hours) {
-        if (totalHours <= 80){
-        return hours * wageRate;}
-        else {
+        if (totalHours <= 80) {
+            return hours * wageRate;
+        } else {
             return overTimeWage + regularWage;
         }
     }
@@ -87,23 +90,84 @@ public class Salary {
         return regularHours * wageRate;
     }
 
-    public void earnings() {
-        System.out.println("Name: " + name);
-        System.out.println("ID: " + ID);
-        System.out.println("Pay Period: " + payPeriod);
+    public void earnings(JFrame salaryFrame) {
+        String[] columnNames = {"",
+                ""};
+        Object[][] data;
         if (overTimeHours > 0) {
-            System.out.println("Regular hours: " + regularHours);
-            System.out.println("Overtime hours: " + overTimeHours);
-            System.out.println("Overtime pay: " + overTimeWage);
-            System.out.println("Regular pay: " + regularWage);
+            data = new Object[][]{
+                    {"Name: ", name},
+                    {"ID: ", ID},
+                    {"Pay Period: ", payPeriod},
+                    {"Total hours: ", totalHours},
+                    {"Regular hours: ", regularHours},
+                    {"Overtime hours: ", overTimeHours},
+                    {"Overtime pay: ", overTimeWage},
+                    {"Regular pay: ", regularWage},
+                    {"Total Earnings: ", totalWage},
+                    {"E.I Reduction: ", (int) (EI * 100) / 100.0},
+                    {"C.P.P/Q.P.P Reduction: ", (int) (CPP_QPP * 100) / 100.0},
+                    {"Total deductions: ", (int) ((EI + CPP_QPP) * 100) / 100.0},
+                    {"Net Wage: ", netWage}
+            };
         } else {
-            System.out.println("Total hours: " + totalHours);
+            data = new Object[][]{
+                    {"Name: ", name},
+                    {"ID: ", ID},
+                    {"Pay Period: ", payPeriod},
+                    {"Total hours: ", totalHours},
+                    {"Total Earnings: ", totalWage},
+                    {"E.I Reduction: ", (int) (EI * 100) / 100.0},
+                    {"C.P.P/Q.P.P Reduction: ", (int) (CPP_QPP * 100) / 100.0},
+                    {"Total deductions: ", (int) ((EI + CPP_QPP) * 100) / 100.0},
+                    {"Net Wage: ", netWage}
+            };
         }
+
+
+        JTable table = new JTable(data, columnNames);
+        table.setFont( table.getFont().deriveFont(Font.BOLD) );
+        table.setRowHeight(25);
+        table.getColumnModel().getColumn(0).setPreferredWidth(150);
+        table.getColumnModel().getColumn(1).setPreferredWidth(150);
+        salaryFrame.add(table);
+
+    }
+
+    public void earnings() {
+
+        System.out.println("Name: " + name);
+
+        System.out.println("ID: " + ID);
+
+        System.out.println("Pay Period: " + payPeriod);
+
+        if (overTimeHours > 0) {
+
+            System.out.println("Regular hours: " + regularHours);
+
+            System.out.println("Overtime hours: " + overTimeHours);
+
+            System.out.println("Overtime pay: " + overTimeWage);
+
+            System.out.println("Regular pay: " + regularWage);
+
+        } else {
+
+            System.out.println("Total hours: " + totalHours);
+
+        }
+
         System.out.println("Total Earnings: " + totalWage);
-        System.out.println("E.I Reduction: " + (int)(EI* 100) / 100.0);
-        System.out.println("C.P.P/Q.P.P Reduction: " + (int)(CPP_QPP* 100) / 100.0);
-        System.out.println("Total reductions: " + (int)((EI + CPP_QPP)* 100) / 100.0);
+
+        System.out.println("E.I Reduction: " + (int) (EI * 100) / 100.0);
+
+        System.out.println("C.P.P/Q.P.P Reduction: " + (int) (CPP_QPP * 100) / 100.0);
+
+        System.out.println("Total reductions: " + (int) ((EI + CPP_QPP) * 100) / 100.0);
+
         System.out.println("Net Wage: " + netWage);
+
 
     }
 

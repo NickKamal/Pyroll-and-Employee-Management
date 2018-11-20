@@ -3,6 +3,8 @@ package model;
 import Exceptions.LessThanMinWageException;
 import observer.Observer;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.util.*;
 
@@ -48,7 +50,7 @@ public class Employee extends Worker {
 
             }
         }
-    writer.println();
+        writer.println();
 
         writer.close();
 
@@ -76,9 +78,49 @@ public class Employee extends Worker {
 
 
     private void getStore() {
+
         for (CompanyStore companyStore : stores) {
             System.out.println("Store no. : " + companyStore.getStoreCode());
         }
+    }
+
+    private String getStore(JFrame frame) {
+        String[] columnNames = {"",
+                ""};
+        Object[][] data;
+        String storeList = "";
+        for (CompanyStore companyStore : stores) {
+            storeList += companyStore.getStoreCode() + "\n";
+        }
+        return storeList;
+    }
+
+    public void getInfo(JFrame frame) {
+        JFrame thisFrame = new JFrame("Info");
+        thisFrame.setSize(300,300);
+        thisFrame.setVisible(true);
+        String[] columnNames = {"",
+                ""};
+        Object[][] data;
+
+        data = new Object[][]{
+                {"", "Updated Info"},
+                {"Name: ", name},
+                {"Position: ", position},
+                {"ID: ",id},
+                {"Wage per hour: ", wagePerHour},
+                {"Start Date: ", startYear},
+                {"Store no.: ", getStore(frame)}
+        };
+
+
+        JTable table = new JTable(data, columnNames);
+        table.setFont(table.getFont().deriveFont(Font.BOLD));
+        table.setRowHeight(25);
+        table.getColumnModel().getColumn(0).setPreferredWidth(100);
+        table.getColumnModel().getColumn(1).setPreferredWidth(100);
+        thisFrame.add(table, BorderLayout.CENTER);
+
     }
 
     public void getInfo() {
