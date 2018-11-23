@@ -2,6 +2,7 @@ package ui.GUI;
 
 import model.Employee;
 import model.Salary;
+import model.Worker;
 import observer.Subject;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ import static ui.GUI.UI.option1sub;
 class SalaryCalculation extends Subject {
 
     //EFFECTS: Calculates, stores and prints the salary of the given employee a
-    public static void calculateSalary(Scanner kb, Map employees, Map employeeSalaryRecord, Map salaryRecord, Map<String, ArrayList<Employee>> stores)
+    public static void calculateSalary(Scanner kb, Map employees, Map employeeSalaryRecord, Map salaryRecord, Map<String, ArrayList<Worker>> stores)
             throws IOException {
         JFrame salaryFrame = new JFrame("Salay Record");
         Salary currentSalary;
@@ -61,6 +62,7 @@ class SalaryCalculation extends Subject {
 
         } else {
             JOptionPane.showMessageDialog(salaryFrame, "ID does not exist!!! Please try again.");
+            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
         }
     }
 

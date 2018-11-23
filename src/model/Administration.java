@@ -1,6 +1,8 @@
 package model;
 
 import Exceptions.LessThanMinWageException;
+
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -46,7 +48,7 @@ public class Administration extends Worker {
 
 
     public void write() throws IOException {
-            PrintWriter writer = new PrintWriter("adminInfo.txt", StandardCharsets.UTF_8);
+            PrintWriter writer = new PrintWriter(new FileWriter("adminInfo.txt", true));
             writer.println(EncryptDecrypt.encrypt(getName()) + ","
                     + EncryptDecrypt.encrypt(getID()) + "," + EncryptDecrypt.encrypt(getPosition())
                     + "," + getWage() + "," + getStartYear() + "," + EncryptDecrypt.encrypt(getPassword()) + "," + getStoreCode() + ",");

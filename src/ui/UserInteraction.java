@@ -13,7 +13,7 @@ import static ui.behindTheScenes.SalaryCalculation.calculateSalary;
 import static ui.behindTheScenes.StoreEmployeeRelation.*;
 import static ui.behindTheScenes.ViewOrModifyEmployeeRecords.*;
 
-class UserInteraction  {
+class UserInteraction {
 
 
     public static void main(String[] args) throws IOException, LessThanMinWageException {
@@ -34,13 +34,16 @@ class UserInteraction  {
         Map salaryRecord = new HashMap();
 
         //Creates a storeNo-EmployeeList dictionary
-        Map<String, ArrayList<Employee>> stores = new HashMap();
+        Map<String, ArrayList<Worker>> stores = new HashMap();
 
         //flag for the main menu
         boolean flag = true;
 
         // Pointers to lines for reading
-        readData(employees, admins, salaryRecord, employeeSalaryRecord, stores);
+        try {
+            readData(employees, admins, salaryRecord, employeeSalaryRecord, stores);
+        } catch (Exception e) {
+        }
 
 
         do {

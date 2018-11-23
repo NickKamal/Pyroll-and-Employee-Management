@@ -94,12 +94,12 @@ public class Employee extends Worker {
         Object[][] data;
         StringBuilder storeList = new StringBuilder();
         for (CompanyStore companyStore : stores) {
-            storeList.append(companyStore.getStoreCode()).append("\n");
+            storeList.append(companyStore.getStoreCode()).append(",");
         }
         return storeList.toString();
     }
 
-    public void getInfo(JFrame frame, Scanner kb, Map employees, Map<String, ArrayList<Employee>> store, Map employeeSalaryRecord, Map salaryRecord) {
+    public void getInfo(JFrame frame, Scanner kb, Map employees, Map<String, ArrayList<Worker>> store, Map employeeSalaryRecord, Map salaryRecord) {
         JFrame thisFrame = new JFrame("Info");
         thisFrame.setSize(300, 300);
         thisFrame.addWindowListener(new WindowAdapter() {

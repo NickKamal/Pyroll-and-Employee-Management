@@ -9,7 +9,7 @@ import java.util.*;
 public class CreateNewEmployeeAndAdmin {
 
     //EFFECTS: Creates a new Admin
-    public static void makeNewAdmin(Scanner kb, Map employees, Map admins, Map<String, ArrayList<Employee>> stores)
+    public static void makeNewAdmin(Scanner kb, Map employees, Map admins, Map<String, ArrayList<Worker>> stores)
             throws LessThanMinWageException, IOException {
         System.out.println("Enter Authorization Key: ");
         String authKey = kb.nextLine();
@@ -18,6 +18,9 @@ public class CreateNewEmployeeAndAdmin {
         if (authKey.equals("SuperStore1517")) {
             String worker = "Admin's";
             Administration newAdmin = new Administration();
+            System.out.println("Enter new password: ");
+            String password = kb.nextLine();
+            newAdmin.setPassword(password);
             String storeCode = getDataFromUser(kb, worker, newAdmin);
             CompanyStore companyStore = new CompanyStore(storeCode);
             admins.put(newAdmin.getID(), newAdmin.getPassword());
@@ -35,7 +38,7 @@ public class CreateNewEmployeeAndAdmin {
 
 
     //EFFECTS: Adds a new Employee
-    public static void createAnEmployee(Scanner kb, Map employees, Map<String, ArrayList<Employee>> stores)
+    public static void createAnEmployee(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores)
             throws LessThanMinWageException, IOException {
         Employee newEmp = new Employee();
         String worker = "employee's";
@@ -51,15 +54,16 @@ public class CreateNewEmployeeAndAdmin {
 
 
     //EFFECTS: Adds a given employee to sore if not already there
-    private static void addToStore(Map<String, ArrayList<Employee>> stores, Worker newEmp, String storeCode) {
+    private static void addToStore(Map<String, ArrayList<Worker>> stores, Worker newEmp, String storeCode) {
         if (stores.containsKey(storeCode)) {
-            ArrayList<Employee> tempEmp = stores.get(storeCode);
+            ArrayList<Worker> tempEmp = stores.get(storeCode);
             tempEmp.add((Employee) newEmp);
             stores.put(storeCode, tempEmp);
 
         } else {
-            ArrayList<Employee> tempEmp = new ArrayList<>();
-            tempEmp.add((Employee) newEmp);
+            ArrayList<Worker> tempEmp = new ArrayList<>();
+            Worker emp = newEmp;
+            tempEmp.add(emp);
             stores.put(storeCode, tempEmp);
         }
     }
@@ -76,7 +80,7 @@ public class CreateNewEmployeeAndAdmin {
 
 
     //EFFECTS: prompts user for new profile data and returns the storeCode
-    private static String getDataFromUser(Scanner kb, String worker, Worker x) throws LessThanMinWageException {
+    public static String getDataFromUser(Scanner kb, String worker, Worker x) throws LessThanMinWageException {
         System.out.println("Enter " + worker + " Name: ");
         x.setName(kb.nextLine());
         System.out.println("Enter " + worker + " ID: ");

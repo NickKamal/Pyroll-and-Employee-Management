@@ -1,4 +1,5 @@
 package ui.behindTheScenes;
+import model.Worker;
 import observer.*;
 import model.CompanyStore;
 import model.Employee;
@@ -48,14 +49,14 @@ public class StoreEmployeeRelation extends Subject {
     }
 
     //EFFECTS: returns the list of employees working in the given store
-    public static void giveTheStoreEmployeeList(Scanner kb, Map<String, ArrayList<Employee>> stores) {
+    public static void giveTheStoreEmployeeList(Scanner kb, Map<String, ArrayList<Worker>> stores) {
         System.out.println("Enter the store code: ");
         String storeCode = kb.nextLine();
         if (stores.containsKey(storeCode)) {
             System.out.println("List of employees: ");
             if (stores.containsKey(storeCode)) {
-                ArrayList<Employee> emp = stores.get(storeCode);
-                for (Employee e : emp) {
+                ArrayList<Worker> emp = stores.get(storeCode);
+                for (Worker e : emp) {
                     System.out.println("Name: " + e.getName() + "     ID: " + e.getID());
                 }
             }

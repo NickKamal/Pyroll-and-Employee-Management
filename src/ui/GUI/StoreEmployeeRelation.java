@@ -2,6 +2,7 @@ package ui.GUI;
 
 import model.CompanyStore;
 import model.Employee;
+import model.Worker;
 import observer.Subject;
 
 import javax.swing.*;
@@ -19,49 +20,49 @@ import static ui.GUI.UI.option1sub;
 class StoreEmployeeRelation extends Subject {
 
     //EFFECTS: Removes employee from the  given store
-    public static void removeEmployeeFromStore(Scanner kb, Map employees) throws IOException {
-        System.out.println("Enter the employee's id: ");
-        String id = kb.nextLine();
+    public static void removeEmployeeFromStore(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord) throws IOException {
+        
+        String id = JOptionPane.showInputDialog("Enter the employee's id: ");
         if (employees.containsKey(id)) {
             Employee emp = (Employee) employees.get(id);
-            System.out.println("Enter the store number: ");
-            String store = kb.nextLine();
+            String store = JOptionPane.showInputDialog(new JFrame(), "Enter the store number: ");
             CompanyStore comp = new CompanyStore(store);
             emp.removeStore(comp);
             observers.add(emp);
             notifyObserver();
             emp.write();
-            emp.getInfo();
+            emp.getInfo(new JFrame(), kb, employees, stores, employeeSalaryRecord, salaryRecord);
         } else {
-            System.out.println("ID not found!!!");
+            JOptionPane.showMessageDialog(new JFrame(), "ID not found!!!");
+            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
         }
     }
 
     //EFFECTS: Adds employee to the given store
-    public static void addEmployeeToStore(Scanner kb, Map employees) throws IOException {
-        System.out.println("Enter the employee's id: ");
-        String id = kb.nextLine();
+    public static void addEmployeeToStore(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord) throws IOException {
+        String id = JOptionPane.showInputDialog("Enter the employee's id: ");
         if (employees.containsKey(id)) {
             Employee emp = (Employee) employees.get(id);
-            System.out.println("Enter the store number: ");
-            String store = kb.nextLine();
+            String store = JOptionPane.showInputDialog(new JFrame(), "Enter the store number: ");
             CompanyStore comp = new CompanyStore(store);
             emp.addStore(comp);
             observers.add(emp);
             notifyObserver();
             emp.write();
-            emp.getInfo();
+            emp.getInfo(new JFrame(), kb, employees, stores, employeeSalaryRecord, salaryRecord);
         } else {
-            System.out.println("ID not found!!!");
+            System.out.println();
+            JOptionPane.showMessageDialog(new JFrame(), "ID not found!!!");
+            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
         }
     }
 
     //EFFECTS: returns the list of employees working in the given store
-    public static void giveTheStoreEmployeeList(Scanner kb, Map employeeSalaryRecord, Map salaryRecord, Map employees, Map<String, ArrayList<Employee>> stores) {
+    public static void giveTheStoreEmployeeList(Scanner kb, Map employeeSalaryRecord, Map salaryRecord, Map employees, Map<String, ArrayList<Worker>> stores) {
 
         String storeCode = JOptionPane.showInputDialog("Enter the store code: ");
         JFrame storeFrame = new JFrame("List of employees in " + storeCode);
-        storeFrame.setSize(400, 400);
+        storeFrame.setSize(500, 400);
         if (stores.containsKey(storeCode)) {
 
             storeFrame.setLayout(new FlowLayout());
@@ -79,8 +80,8 @@ class StoreEmployeeRelation extends Subject {
             });
             storeFrame.setVisible(true);
             if (stores.containsKey(storeCode)) {
-                ArrayList<Employee> emp = stores.get(storeCode);
-                for (Employee e : emp) {
+                ArrayList<Worker> emp = stores.get(storeCode);
+                for (Worker e : emp) {
                     tableModel.addRow(new Object[]{e.getName(), e.getID()});
                 }
             }

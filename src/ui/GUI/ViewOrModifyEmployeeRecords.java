@@ -3,6 +3,7 @@ package ui.GUI;
 import Exceptions.LessThanMinWageException;
 import model.Employee;
 import model.Salary;
+import model.Worker;
 import observer.Subject;
 
 import javax.swing.*;
@@ -23,7 +24,7 @@ import static ui.behindTheScenes.CreateNewEmployeeAndAdmin.tryThrowAndHandleMinW
 class ViewOrModifyEmployeeRecords extends Subject {
 
     //EFFECTS: prints the sa;ary records of the given employee
-    public static void showMeThePayRecords(Scanner kb, Map employeeSalaryRecord, Map salaryRecord, Map employees, Map<String, ArrayList<Employee>> stores) {
+    public static void showMeThePayRecords(Scanner kb, Map employeeSalaryRecord, Map salaryRecord, Map employees, Map<String, ArrayList<Worker>> stores) {
         JFrame frame = new JFrame();
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -43,23 +44,26 @@ class ViewOrModifyEmployeeRecords extends Subject {
                 neededRecord.earnings(frame);
             } else {
                 JOptionPane.showMessageDialog(frame, "No record found!!!");
+                option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
 
             }
         } else {
             JOptionPane.showMessageDialog(frame, "ID not found!!");
+            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
         }
     }
 
 
     //EFFECTS: menu function to view an employee's info or to modify it
-    public static void viewOrModifyEmployeeInfo(Scanner kb, Map employees, Map<String, ArrayList<Employee>> stores, Map employeeSalaryRecord, Map salaryRecord) {
+    public static void viewOrModifyEmployeeInfo(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord) {
         String id = JOptionPane.showInputDialog("Please enter the ID of the employee: ");
+
         JFrame adminFrame = new JFrame("\nWelcome!\n");
         if (employees.containsKey(id)) {
             Employee emp = (Employee) employees.get(id);
 
             adminFrame.setLayout(new FlowLayout());
-            adminFrame.setSize(400, 200);
+            adminFrame.setSize(500, 200);
             JPanel adminPanel = new JPanel();
             adminPanel.setLayout(new BoxLayout(adminPanel, BoxLayout.PAGE_AXIS));
             adminFrame.add(adminPanel, CENTER_ALIGNMENT);
@@ -148,7 +152,7 @@ class ViewOrModifyEmployeeRecords extends Subject {
             });
         } else {
             JOptionPane.showMessageDialog(adminFrame, "ID not Found!!");
-            viewOrModifyEmployeeInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
         }
 
 

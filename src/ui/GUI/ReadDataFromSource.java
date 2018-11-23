@@ -1,10 +1,7 @@
 package ui.GUI;
 
 import Exceptions.LessThanMinWageException;
-import model.CompanyStore;
-import model.Employee;
-import model.EncryptDecrypt;
-import model.Salary;
+import model.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,7 +17,7 @@ import java.util.Map;
 class ReadDataFromSource {
 
     public static void readData(Map employees, Map admins, Map salaryRecord, Map employeeSalaryRecord,
-                                Map<String, ArrayList<Employee>> stores) throws
+                                Map<String, ArrayList<Worker>> stores) throws
             IOException, LessThanMinWageException {
         List<String> adm = Files.readAllLines(Paths.get("adminInfo.txt"));
         List<String> emp = Files.readAllLines(Paths.get("empInfo.txt"));
@@ -42,11 +39,11 @@ class ReadDataFromSource {
             for (int i = 5; i < partsOfEmp.size(); i++) {
                 if (partsOfEmp.get(i) != null) {
                     if (stores.containsKey(partsOfEmp.get(i))) {
-                        ArrayList<Employee> empList = stores.get(partsOfEmp.get(i));
+                        ArrayList<Worker> empList = stores.get(partsOfEmp.get(i));
                         empList.add(employee);
                         stores.put(partsOfEmp.get(i), empList);
                     } else {
-                        ArrayList<Employee> tempList = new ArrayList<>();
+                        ArrayList<Worker> tempList = new ArrayList<>();
                         tempList.add(employee);
                         employee.addStore(new CompanyStore(partsOfEmp.get(i)));
                         stores.put(partsOfEmp.get(i), tempList);

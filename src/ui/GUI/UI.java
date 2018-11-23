@@ -15,6 +15,7 @@ import java.util.*;
 
 
 import static ui.GUI.CreateNewEmployeeAndAdmin.createAnEmployee;
+import static ui.GUI.CreateNewEmployeeAndAdmin.makeNewAdmin;
 import static ui.GUI.ReadDataFromSource.readData;
 import static ui.GUI.SalaryCalculation.calculateSalary;
 import static ui.GUI.StoreEmployeeRelation.addEmployeeToStore;
@@ -22,7 +23,6 @@ import static ui.GUI.StoreEmployeeRelation.giveTheStoreEmployeeList;
 import static ui.GUI.StoreEmployeeRelation.removeEmployeeFromStore;
 import static ui.GUI.ViewOrModifyEmployeeRecords.showMeThePayRecords;
 import static ui.GUI.ViewOrModifyEmployeeRecords.viewOrModifyEmployeeInfo;
-import static ui.behindTheScenes.CreateNewEmployeeAndAdmin.makeNewAdmin;
 
 public class UI extends JFrame {
     static boolean flag = false;
@@ -48,11 +48,15 @@ public class UI extends JFrame {
         Map salaryRecord = new HashMap();
 
         //Creates a storeNo-EmployeeList dictionary
-        Map<String, ArrayList<Employee>> stores = new HashMap();
+        Map<String, ArrayList<Worker>> stores = new HashMap();
 
 
         // Pointers to lines for reading
-        readData(employees, admins, salaryRecord, employeeSalaryRecord, stores);
+
+        try {
+            readData(employees, admins, salaryRecord, employeeSalaryRecord, stores);
+        } catch (Exception e) {
+        }
 
         //run GUI
         runGUI(kb, employees, admins, employeeSalaryRecord, salaryRecord, stores);
@@ -60,7 +64,7 @@ public class UI extends JFrame {
 
     }
 
-    private static void runGUI(Scanner kb, Map employees, Map admins, Map employeeSalaryRecord, Map salaryRecord, Map<String, ArrayList<Employee>> stores) {
+    private static void runGUI(Scanner kb, Map employees, Map admins, Map employeeSalaryRecord, Map salaryRecord, Map<String, ArrayList<Worker>> stores) {
         JFrame mainFrame = new JFrame("Employee Payroll and Record Management");
         mainFrame.setSize(450, 200);
         mainFrame.setLayout(new FlowLayout());
@@ -127,7 +131,7 @@ public class UI extends JFrame {
 
     }
 
-    private static void option1(JFrame mainFrame, Map admins, Scanner kb, Map employees, Map<String, ArrayList<Employee>> stores, Map employeeSalaryRecord, Map salaryRecord) {
+    private static void option1(JFrame mainFrame, Map admins, Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord) {
         String loginID;
         JFrame adminLoginFrame = new JFrame("Admin Login");
         adminLoginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -186,7 +190,7 @@ public class UI extends JFrame {
     }
 
 
-    public static void option1sub(Scanner kb, Map employees, Map<String, ArrayList<Employee>> stores, Map employeeSalaryRecord, Map salaryRecord) {
+    public static void option1sub(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord) {
         JFrame adminFrame = new JFrame("\nWelcome!\n");
         adminFrame.setLayout(new FlowLayout());
         adminFrame.setSize(400, 380);
@@ -219,7 +223,7 @@ public class UI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     adminFrame.setVisible(false);
-                    createAnEmployee(employees, stores, adminFrame);
+                    createAnEmployee(kb, employees, stores, employeeSalaryRecord, salaryRecord, adminFrame);
                 } catch (Exception e1) {
                     JOptionPane.showMessageDialog(adminFrame, "Error!!");
                     actionPerformed(e);
@@ -278,7 +282,7 @@ public class UI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     adminFrame.setVisible(false);
-                    addEmployeeToStore(kb, employees);
+                    addEmployeeToStore(kb, employees, stores, employeeSalaryRecord, salaryRecord);
                 } catch (Exception e1) {
 
                     JOptionPane.showMessageDialog(adminFrame, "Error!!");
@@ -291,7 +295,7 @@ public class UI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     adminFrame.setVisible(false);
-                    removeEmployeeFromStore(kb, employees);
+                    removeEmployeeFromStore(kb, employees, stores, employeeSalaryRecord, salaryRecord);
                 } catch (Exception e1) {
 
                     JOptionPane.showMessageDialog(adminFrame, "Error!!");
