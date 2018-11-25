@@ -10,6 +10,7 @@ import java.io.*;
 import java.util.*;
 
 import static ui.GUI.UI.option1sub;
+import static ui.GUI.UI.runGUI;
 
 
 public class Employee extends Worker {
@@ -99,7 +100,7 @@ public class Employee extends Worker {
         return storeList.toString();
     }
 
-    public void getInfo(JFrame frame, Scanner kb, Map employees, Map<String, ArrayList<Worker>> store, Map employeeSalaryRecord, Map salaryRecord) {
+    public void getInfo(Scanner kb, Map employees, Map<String, ArrayList<Worker>> store, Map employeeSalaryRecord, Map salaryRecord) {
         JFrame thisFrame = new JFrame("Info");
         thisFrame.setSize(300, 300);
         thisFrame.addWindowListener(new WindowAdapter() {
@@ -107,6 +108,44 @@ public class Employee extends Worker {
                 thisFrame.setVisible(false);
                 try {
                     option1sub(kb, employees, store, employeeSalaryRecord, salaryRecord);
+
+                } catch (Exception ignored) {
+
+                }
+            }
+        });
+        thisFrame.setVisible(true);
+        String[] columnNames = {"",
+                ""};
+        Object[][] data;
+
+        data = new Object[][]{
+                {"", "Updated Info"},
+                {"Name: ", name},
+                {"Position: ", position},
+                {"ID: ", id},
+                {"Wage per hour: ", wagePerHour},
+                {"Start Date: ", startYear},
+                {"Store no.: ", getStoreGUI()}
+        };
+
+
+        JTable table = new JTable(data, columnNames);
+        table.setFont(table.getFont().deriveFont(Font.BOLD));
+        table.setRowHeight(25);
+        table.getColumnModel().getColumn(0).setPreferredWidth(100);
+        table.getColumnModel().getColumn(1).setPreferredWidth(100);
+        thisFrame.add(table, BorderLayout.CENTER);
+
+    }
+    public void getInfoAdm(Scanner kb, Map employees, Map<String, ArrayList<Worker>> store, Map employeeSalaryRecord, Map salaryRecord, Map admins) {
+        JFrame thisFrame = new JFrame("Info");
+        thisFrame.setSize(300, 300);
+        thisFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent) {
+                thisFrame.setVisible(false);
+                try {
+                    runGUI(kb, employees, admins, employeeSalaryRecord, salaryRecord, store);
 
                 } catch (Exception ignored) {
 

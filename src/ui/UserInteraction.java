@@ -42,7 +42,7 @@ class UserInteraction {
         // Pointers to lines for reading
         try {
             readData(employees, admins, salaryRecord, employeeSalaryRecord, stores);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
 

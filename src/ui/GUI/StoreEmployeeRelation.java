@@ -21,7 +21,7 @@ class StoreEmployeeRelation extends Subject {
 
     //EFFECTS: Removes employee from the  given store
     public static void removeEmployeeFromStore(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord) throws IOException {
-        
+
         String id = JOptionPane.showInputDialog("Enter the employee's id: ");
         if (employees.containsKey(id)) {
             Employee emp = (Employee) employees.get(id);
@@ -31,7 +31,7 @@ class StoreEmployeeRelation extends Subject {
             observers.add(emp);
             notifyObserver();
             emp.write();
-            emp.getInfo(new JFrame(), kb, employees, stores, employeeSalaryRecord, salaryRecord);
+            emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ID not found!!!");
             option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
@@ -49,7 +49,7 @@ class StoreEmployeeRelation extends Subject {
             observers.add(emp);
             notifyObserver();
             emp.write();
-            emp.getInfo(new JFrame(), kb, employees, stores, employeeSalaryRecord, salaryRecord);
+            emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
         } else {
             System.out.println();
             JOptionPane.showMessageDialog(new JFrame(), "ID not found!!!");

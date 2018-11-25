@@ -28,7 +28,7 @@ public class UI extends JFrame {
     static boolean flag = false;
 
 
-    public static void main(String[] args) throws IOException, LessThanMinWageException {
+    public static void main(String[] args) {
 
 
         //readWebPage();
@@ -55,7 +55,7 @@ public class UI extends JFrame {
 
         try {
             readData(employees, admins, salaryRecord, employeeSalaryRecord, stores);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
         //run GUI
@@ -64,7 +64,7 @@ public class UI extends JFrame {
 
     }
 
-    private static void runGUI(Scanner kb, Map employees, Map admins, Map employeeSalaryRecord, Map salaryRecord, Map<String, ArrayList<Worker>> stores) {
+    public static void runGUI(Scanner kb, Map employees, Map admins, Map employeeSalaryRecord, Map salaryRecord, Map<String, ArrayList<Worker>> stores) {
         JFrame mainFrame = new JFrame("Employee Payroll and Record Management");
         mainFrame.setSize(450, 200);
         mainFrame.setLayout(new FlowLayout());
@@ -98,11 +98,13 @@ public class UI extends JFrame {
         option2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                mainFrame.setVisible(false);
                 try {
-                    makeNewAdmin(kb, employees, admins, stores);
+                    makeNewAdmin(kb, employees, admins, stores, employeeSalaryRecord, salaryRecord);
                 } catch (Exception ignored) {
+
+                    runGUI(kb, employees, admins, employeeSalaryRecord, salaryRecord, stores);
                 }
-                runGUI(kb, employees, admins, employeeSalaryRecord, salaryRecord, stores);
 
             }
         });
@@ -110,16 +112,23 @@ public class UI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                System.out.println("Enter your id: ");
-                String id = kb.nextLine();
+                mainFrame.setVisible(false);
+                JFrame frame = new JFrame("Empoyeee");
+                frame.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        runGUI(kb, employees, admins, employeeSalaryRecord, salaryRecord, stores);
+                    }
+                });
+                String id = JOptionPane.showInputDialog("Enter your id: ");
                 if (employees.containsKey(id)) {
                     Employee emp = (Employee) employees.get(id);
-                    emp.getInfo();
+                    emp.getInfoAdm(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
                 } else {
-                    System.out.println("ID not found!!!");
+                    JOptionPane.showMessageDialog(frame, "ID not found!!!");
+                    runGUI(kb, employees, admins, employeeSalaryRecord, salaryRecord, stores);
 
                 }
-                runGUI(kb, employees, admins, employeeSalaryRecord, salaryRecord, stores);
             }
         });
         option4.addActionListener(new ActionListener() {

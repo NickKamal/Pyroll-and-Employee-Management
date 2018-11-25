@@ -92,7 +92,7 @@ class ViewOrModifyEmployeeRecords extends Subject {
                 public void actionPerformed(ActionEvent e) {
                     adminFrame.setVisible(false);
                     emp.setName(JOptionPane.showInputDialog("Please enter the new name: "));
-                    emp.getInfo(adminFrame, kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                    emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
                     observers.add(emp);
                     notifyObserver();
                     try {
@@ -107,7 +107,7 @@ class ViewOrModifyEmployeeRecords extends Subject {
                 public void actionPerformed(ActionEvent e) {
                     adminFrame.setVisible(false);
                     emp.setPosition(JOptionPane.showInputDialog("Please enter the new position: "));
-                    emp.getInfo(adminFrame, kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                    emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
                     observers.add(emp);
                     notifyObserver();
 
@@ -127,7 +127,7 @@ class ViewOrModifyEmployeeRecords extends Subject {
                     } catch (LessThanMinWageException e1) {
                         actionPerformed(e);
                     }
-                    emp.getInfo(adminFrame, kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                    emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
 
                     try {
                         emp.write();
@@ -140,7 +140,7 @@ class ViewOrModifyEmployeeRecords extends Subject {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     adminFrame.setVisible(false);
-                    emp.getInfo(adminFrame, kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                    emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
                     observers.add(emp);
                     notifyObserver();
 

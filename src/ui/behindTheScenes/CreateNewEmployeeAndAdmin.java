@@ -57,13 +57,12 @@ public class CreateNewEmployeeAndAdmin {
     private static void addToStore(Map<String, ArrayList<Worker>> stores, Worker newEmp, String storeCode) {
         if (stores.containsKey(storeCode)) {
             ArrayList<Worker> tempEmp = stores.get(storeCode);
-            tempEmp.add((Employee) newEmp);
+            tempEmp.add(newEmp);
             stores.put(storeCode, tempEmp);
 
         } else {
             ArrayList<Worker> tempEmp = new ArrayList<>();
-            Worker emp = newEmp;
-            tempEmp.add(emp);
+            tempEmp.add(newEmp);
             stores.put(storeCode, tempEmp);
         }
     }
