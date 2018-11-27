@@ -24,13 +24,13 @@ import static ui.behindTheScenes.CreateNewEmployeeAndAdmin.tryThrowAndHandleMinW
 class ViewOrModifyEmployeeRecords extends Subject {
 
     //EFFECTS: prints the sa;ary records of the given employee
-    public static void showMeThePayRecords(Scanner kb, Map employeeSalaryRecord, Map salaryRecord, Map employees, Map<String, ArrayList<Worker>> stores) {
+    public static void showMeThePayRecords(Scanner kb, Map employeeSalaryRecord, Map salaryRecord, Map employees, Map<String, ArrayList<Worker>> stores, Map admins) {
         JFrame frame = new JFrame();
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
 
             }
         });
@@ -44,18 +44,18 @@ class ViewOrModifyEmployeeRecords extends Subject {
                 neededRecord.earnings(frame);
             } else {
                 JOptionPane.showMessageDialog(frame, "No record found!!!");
-                option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
 
             }
         } else {
             JOptionPane.showMessageDialog(frame, "ID not found!!");
-            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
         }
     }
 
 
     //EFFECTS: menu function to view an employee's info or to modify it
-    public static void viewOrModifyEmployeeInfo(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord) {
+    public static void viewOrModifyEmployeeInfo(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord, Map admins) {
         String id = JOptionPane.showInputDialog("Please enter the ID of the employee: ");
 
         JFrame adminFrame = new JFrame("\nWelcome!\n");
@@ -70,7 +70,7 @@ class ViewOrModifyEmployeeRecords extends Subject {
             adminFrame.addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent windowEvent) {
                     try {
-                        option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                        option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
                     } catch (Exception ignored) {
 
                     }
@@ -92,9 +92,10 @@ class ViewOrModifyEmployeeRecords extends Subject {
                 public void actionPerformed(ActionEvent e) {
                     adminFrame.setVisible(false);
                     emp.setName(JOptionPane.showInputDialog("Please enter the new name: "));
-                    emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
                     observers.add(emp);
                     notifyObserver();
+
+                    emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
                     try {
                         emp.write();
                     } catch (Exception ignored) {
@@ -107,9 +108,10 @@ class ViewOrModifyEmployeeRecords extends Subject {
                 public void actionPerformed(ActionEvent e) {
                     adminFrame.setVisible(false);
                     emp.setPosition(JOptionPane.showInputDialog("Please enter the new position: "));
-                    emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
                     observers.add(emp);
                     notifyObserver();
+                    emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
+
 
                     try {
                         emp.write();
@@ -127,7 +129,9 @@ class ViewOrModifyEmployeeRecords extends Subject {
                     } catch (LessThanMinWageException e1) {
                         actionPerformed(e);
                     }
-                    emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                    observers.add(emp);
+                    notifyObserver();
+                    emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
 
                     try {
                         emp.write();
@@ -140,10 +144,7 @@ class ViewOrModifyEmployeeRecords extends Subject {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     adminFrame.setVisible(false);
-                    emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
-                    observers.add(emp);
-                    notifyObserver();
-
+                    emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
                     try {
                         emp.write();
                     } catch (Exception ignored) {
@@ -152,7 +153,7 @@ class ViewOrModifyEmployeeRecords extends Subject {
             });
         } else {
             JOptionPane.showMessageDialog(adminFrame, "ID not Found!!");
-            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
         }
 
 

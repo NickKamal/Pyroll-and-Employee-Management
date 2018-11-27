@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
+import static ui.GUI.UI.option1sub;
 import static ui.GUI.UI.runGUI;
-import static ui.behindTheScenes.CreateNewEmployeeAndAdmin.getDataFromUser;
 
 class CreateNewEmployeeAndAdmin {
 
@@ -140,7 +140,7 @@ class CreateNewEmployeeAndAdmin {
 
 
     //EFFECTS: Adds a new Employee
-    public static void createAnEmployee(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord, JFrame adminFrame) {
+    public static void createAnEmployee(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord, JFrame adminFrame, Map admins) {
 
         Employee newEmp = new Employee();
         String worker = "employee's";
@@ -148,6 +148,12 @@ class CreateNewEmployeeAndAdmin {
         SpringLayout springLayout = new SpringLayout();
         getDataFrame.setLayout(springLayout);
         getDataFrame.setSize(400, 250);
+        getDataFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
+            }
+        });
         JLabel nameLabel = new JLabel("Enter " + worker + " Name: ");
         getDataFrame.add(nameLabel);
         springLayout.putConstraint(SpringLayout.WEST, nameLabel, 20, SpringLayout.WEST, getDataFrame);
@@ -227,7 +233,7 @@ class CreateNewEmployeeAndAdmin {
                     newEmp.write();
                 } catch (IOException ignored) {
                 }
-                newEmp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                newEmp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
                 getDataFrame.setVisible(false);
 
 

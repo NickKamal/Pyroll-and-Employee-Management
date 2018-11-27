@@ -19,7 +19,7 @@ import static ui.GUI.UI.option1sub;
 class SalaryCalculation extends Subject {
 
     //EFFECTS: Calculates, stores and prints the salary of the given employee a
-    public static void calculateSalary(Scanner kb, Map employees, Map employeeSalaryRecord, Map salaryRecord, Map<String, ArrayList<Worker>> stores)
+    public static void calculateSalary(Scanner kb, Map employees, Map employeeSalaryRecord, Map salaryRecord, Map<String, ArrayList<Worker>> stores, Map admins)
             throws IOException {
         JFrame salaryFrame = new JFrame("Salay Record");
         Salary currentSalary;
@@ -54,7 +54,7 @@ class SalaryCalculation extends Subject {
             salaryFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                    option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
 
                 }
             });
@@ -62,7 +62,7 @@ class SalaryCalculation extends Subject {
 
         } else {
             JOptionPane.showMessageDialog(salaryFrame, "ID does not exist!!! Please try again.");
-            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
         }
     }
 

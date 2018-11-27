@@ -1,7 +1,6 @@
 
 package ui.GUI;
 
-import Exceptions.LessThanMinWageException;
 import model.*;
 
 import javax.swing.*;
@@ -10,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 import java.util.*;
 
 
@@ -66,6 +64,21 @@ public class UI extends JFrame {
 
     public static void runGUI(Scanner kb, Map employees, Map admins, Map employeeSalaryRecord, Map salaryRecord, Map<String, ArrayList<Worker>> stores) {
         JFrame mainFrame = new JFrame("Employee Payroll and Record Management");
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+
+        SwingUtilities.updateComponentTreeUI(mainFrame);
+
+
         mainFrame.setSize(450, 200);
         mainFrame.setLayout(new FlowLayout());
         JPanel controlPanel = new JPanel();
@@ -187,7 +200,7 @@ public class UI extends JFrame {
 
                 } else if (admins.get(loginID).equals(loginPassword)) {
                     adminLoginFrame.setVisible(false);
-                    option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                    option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
                 } else {
                     JOptionPane.showMessageDialog(adminLoginFrame, "Invalid Password!!");
                     adminLoginFrame.setVisible(false);
@@ -199,7 +212,7 @@ public class UI extends JFrame {
     }
 
 
-    public static void option1sub(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord) {
+    public static void option1sub(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord, Map admins) {
         JFrame adminFrame = new JFrame("\nWelcome!\n");
         adminFrame.setLayout(new FlowLayout());
         adminFrame.setSize(400, 380);
@@ -232,7 +245,7 @@ public class UI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     adminFrame.setVisible(false);
-                    createAnEmployee(kb, employees, stores, employeeSalaryRecord, salaryRecord, adminFrame);
+                    createAnEmployee(kb, employees, stores, employeeSalaryRecord, salaryRecord, adminFrame, admins);
                 } catch (Exception e1) {
                     JOptionPane.showMessageDialog(adminFrame, "Error!!");
                     actionPerformed(e);
@@ -245,7 +258,7 @@ public class UI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     adminFrame.setVisible(false);
-                    calculateSalary(kb, employees, employeeSalaryRecord, salaryRecord, stores);
+                    calculateSalary(kb, employees, employeeSalaryRecord, salaryRecord, stores, admins);
                 } catch (Exception e1) {
 
                     JOptionPane.showMessageDialog(adminFrame, "Error!!");
@@ -258,7 +271,7 @@ public class UI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     adminFrame.setVisible(false);
-                    viewOrModifyEmployeeInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                    viewOrModifyEmployeeInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
                 } catch (Exception e1) {
                     JOptionPane.showMessageDialog(adminFrame, "Error!!");
                     actionPerformed(e);
@@ -271,7 +284,7 @@ public class UI extends JFrame {
                 adminFrame.setVisible(false);
 
                 try {
-                    showMeThePayRecords(kb, employeeSalaryRecord, salaryRecord, employees, stores);
+                    showMeThePayRecords(kb, employeeSalaryRecord, salaryRecord, employees, stores, admins);
                 } catch (Exception e1) {
                     actionPerformed(e);
                 }
@@ -283,7 +296,7 @@ public class UI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 adminFrame.setVisible(false);
-                giveTheStoreEmployeeList(kb, employeeSalaryRecord, salaryRecord, employees, stores);
+                giveTheStoreEmployeeList(kb, employeeSalaryRecord, salaryRecord, employees, stores, admins);
             }
         });
         op6.addActionListener(new ActionListener() {
@@ -291,7 +304,7 @@ public class UI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     adminFrame.setVisible(false);
-                    addEmployeeToStore(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                    addEmployeeToStore(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
                 } catch (Exception e1) {
 
                     JOptionPane.showMessageDialog(adminFrame, "Error!!");
@@ -304,7 +317,7 @@ public class UI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     adminFrame.setVisible(false);
-                    removeEmployeeFromStore(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                    removeEmployeeFromStore(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
                 } catch (Exception e1) {
 
                     JOptionPane.showMessageDialog(adminFrame, "Error!!");
@@ -315,7 +328,8 @@ public class UI extends JFrame {
         op8.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                adminFrame.setVisible(false);
+                runGUI(kb, employees, admins, employeeSalaryRecord, salaryRecord, stores);
             }
         });
 

@@ -100,14 +100,16 @@ public class Employee extends Worker {
         return storeList.toString();
     }
 
-    public void getInfo(Scanner kb, Map employees, Map<String, ArrayList<Worker>> store, Map employeeSalaryRecord, Map salaryRecord) {
+    public void getInfo(Scanner kb, Map employees, Map<String, ArrayList<Worker>> store, Map employeeSalaryRecord, Map salaryRecord, Map admins) {
+
         JFrame thisFrame = new JFrame("Info");
         thisFrame.setSize(300, 300);
+
         thisFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent windowEvent) {
                 thisFrame.setVisible(false);
                 try {
-                    option1sub(kb, employees, store, employeeSalaryRecord, salaryRecord);
+                    option1sub(kb, employees, store, employeeSalaryRecord, salaryRecord, admins);
 
                 } catch (Exception ignored) {
 
@@ -138,6 +140,7 @@ public class Employee extends Worker {
         thisFrame.add(table, BorderLayout.CENTER);
 
     }
+
     public void getInfoAdm(Scanner kb, Map employees, Map<String, ArrayList<Worker>> store, Map employeeSalaryRecord, Map salaryRecord, Map admins) {
         JFrame thisFrame = new JFrame("Info");
         thisFrame.setSize(300, 300);
@@ -152,6 +155,10 @@ public class Employee extends Worker {
                 }
             }
         });
+        if (update.length() > 2){
+            JOptionPane.showMessageDialog(new JFrame("Notification"), update);
+            update = "";
+        }
         thisFrame.setVisible(true);
         String[] columnNames = {"",
                 ""};

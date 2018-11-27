@@ -20,7 +20,7 @@ import static ui.GUI.UI.option1sub;
 class StoreEmployeeRelation extends Subject {
 
     //EFFECTS: Removes employee from the  given store
-    public static void removeEmployeeFromStore(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord) throws IOException {
+    public static void removeEmployeeFromStore(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord, Map admins) throws IOException {
 
         String id = JOptionPane.showInputDialog("Enter the employee's id: ");
         if (employees.containsKey(id)) {
@@ -31,15 +31,15 @@ class StoreEmployeeRelation extends Subject {
             observers.add(emp);
             notifyObserver();
             emp.write();
-            emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+            emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ID not found!!!");
-            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
         }
     }
 
     //EFFECTS: Adds employee to the given store
-    public static void addEmployeeToStore(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord) throws IOException {
+    public static void addEmployeeToStore(Scanner kb, Map employees, Map<String, ArrayList<Worker>> stores, Map employeeSalaryRecord, Map salaryRecord, Map admins) throws IOException {
         String id = JOptionPane.showInputDialog("Enter the employee's id: ");
         if (employees.containsKey(id)) {
             Employee emp = (Employee) employees.get(id);
@@ -49,16 +49,16 @@ class StoreEmployeeRelation extends Subject {
             observers.add(emp);
             notifyObserver();
             emp.write();
-            emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+            emp.getInfo(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
         } else {
             System.out.println();
             JOptionPane.showMessageDialog(new JFrame(), "ID not found!!!");
-            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
         }
     }
 
     //EFFECTS: returns the list of employees working in the given store
-    public static void giveTheStoreEmployeeList(Scanner kb, Map employeeSalaryRecord, Map salaryRecord, Map employees, Map<String, ArrayList<Worker>> stores) {
+    public static void giveTheStoreEmployeeList(Scanner kb, Map employeeSalaryRecord, Map salaryRecord, Map employees, Map<String, ArrayList<Worker>> stores, Map admins) {
 
         String storeCode = JOptionPane.showInputDialog("Enter the store code: ");
         JFrame storeFrame = new JFrame("List of employees in " + storeCode);
@@ -74,7 +74,7 @@ class StoreEmployeeRelation extends Subject {
             storeFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+                    option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
 
                 }
             });
@@ -87,7 +87,7 @@ class StoreEmployeeRelation extends Subject {
             }
         } else {
             JOptionPane.showMessageDialog(storeFrame, "ID not found!!!");
-            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord);
+            option1sub(kb, employees, stores, employeeSalaryRecord, salaryRecord, admins);
 
         }
     }
