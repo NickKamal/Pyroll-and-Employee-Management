@@ -18,7 +18,7 @@ import java.util.Scanner;
 
 import static java.awt.Component.CENTER_ALIGNMENT;
 import static java.awt.font.GraphicAttribute.TOP_ALIGNMENT;
-import static ui.GUI.UserInteraction.option1sub;
+import static ui.GUI.UI.option1sub;
 import static ui.UI.CreateNewEmployeeAndAdmin.tryThrowAndHandleMinWageException;
 
 class ViewOrModifyEmployeeRecords extends Subject {

@@ -3,6 +3,8 @@ package model;
 import Exceptions.LessThanMinWageException;
 import observer.Observer;
 
+import java.util.Objects;
+
 public abstract class Worker extends Observer {
 
     String name;
@@ -11,6 +13,18 @@ public abstract class Worker extends Observer {
     double wagePerHour;
     String startYear;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Worker worker = (Worker) o;
+        return Objects.equals(id, worker.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     String storeCode;
 

@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
-import static ui.GUI.UserInteraction.option1sub;
+import static ui.GUI.CreateNewEmployeeAndAdmin.addToStore;
+import static ui.GUI.UI.option1sub;
 
 class StoreEmployeeRelation extends Subject {
 
@@ -28,6 +29,8 @@ class StoreEmployeeRelation extends Subject {
             String store = JOptionPane.showInputDialog(new JFrame(), "Enter the store number: ");
             CompanyStore comp = new CompanyStore(store);
             emp.removeStore(comp);
+            comp.removeEmployee(emp);
+            stores.get(store).remove(emp);
             observers.add(emp);
             notifyObserver();
             emp.write();
@@ -46,6 +49,7 @@ class StoreEmployeeRelation extends Subject {
             String store = JOptionPane.showInputDialog(new JFrame(), "Enter the store number: ");
             CompanyStore comp = new CompanyStore(store);
             emp.addStore(comp);
+            addToStore(stores, emp, store);
             observers.add(emp);
             notifyObserver();
             emp.write();

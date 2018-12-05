@@ -46,11 +46,13 @@ class ReadDataFromSource {
                         ArrayList<Worker> tempList = new ArrayList<>();
                         tempList.add(employee);
                         employee.addStore(new CompanyStore(partsOfEmp.get(i)));
+
                         stores.put(partsOfEmp.get(i), tempList);
                     }
 
                 }
             }
+
             employees.put(EncryptDecrypt.decrypt(partsOfEmp.get(1)), employee);
         }
 

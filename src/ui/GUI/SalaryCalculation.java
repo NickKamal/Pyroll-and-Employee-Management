@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
-import static ui.GUI.UserInteraction.option1sub;
+import static ui.GUI.UI.option1sub;
 
 class SalaryCalculation extends Subject {
 

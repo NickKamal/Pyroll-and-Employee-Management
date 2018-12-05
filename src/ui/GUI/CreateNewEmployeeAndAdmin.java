@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
-import static ui.GUI.UserInteraction.option1sub;
-import static ui.GUI.UserInteraction.runGUI;
+import static ui.GUI.UI.option1sub;
+import static ui.GUI.UI.runGUI;
 
 class CreateNewEmployeeAndAdmin {
 
@@ -243,14 +243,16 @@ class CreateNewEmployeeAndAdmin {
 
 
     //EFFECTS: Adds a given employee to sore if not already there
-    private static void addToStore(Map<String, ArrayList<Worker>> stores, Worker newEmp, String storeCode) {
+    static void addToStore(Map<String, ArrayList<Worker>> stores, Worker newEmp, String storeCode) {
         if (stores.containsKey(storeCode)) {
             ArrayList<Worker> tempEmp = stores.get(storeCode);
+            tempEmp.remove(newEmp);
             tempEmp.add(newEmp);
             stores.put(storeCode, tempEmp);
 
         } else {
             ArrayList<Worker> tempEmp = new ArrayList<>();
+            tempEmp.remove(newEmp);
             tempEmp.add(newEmp);
             stores.put(storeCode, tempEmp);
         }
