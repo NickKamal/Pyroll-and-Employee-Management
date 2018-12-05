@@ -1,5 +1,5 @@
 
-package ui;
+package ui.UI;
 
 import Exceptions.LessThanMinWageException;
 import model.*;
@@ -7,11 +7,11 @@ import model.*;
 import java.io.IOException;
 import java.util.*;
 
-import static ui.behindTheScenes.CreateNewEmployeeAndAdmin.*;
-import static ui.behindTheScenes.ReadDataFromSource.*;
-import static ui.behindTheScenes.SalaryCalculation.calculateSalary;
-import static ui.behindTheScenes.StoreEmployeeRelation.*;
-import static ui.behindTheScenes.ViewOrModifyEmployeeRecords.*;
+import static ui.UI.CreateNewEmployeeAndAdmin.*;
+import static ui.UI.ReadDataFromSource.*;
+import static ui.UI.SalaryCalculation.calculateSalary;
+import static ui.UI.StoreEmployeeRelation.*;
+import static ui.UI.ViewOrModifyEmployeeRecords.*;
 
 class UserInteraction {
 

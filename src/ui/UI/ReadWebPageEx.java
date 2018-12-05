@@ -1,4 +1,4 @@
-package ui.behindTheScenes;
+package ui.UI;
 
 import java.io.BufferedReader;
 import java.io.IOException;

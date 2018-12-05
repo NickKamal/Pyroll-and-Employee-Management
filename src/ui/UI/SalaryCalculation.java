@@ -1,4 +1,4 @@
-package ui.behindTheScenes;
+package ui.UI;
 
 import model.Employee;
 import model.Salary;

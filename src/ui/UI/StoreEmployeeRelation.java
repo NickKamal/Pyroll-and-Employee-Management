@@ -1,4 +1,4 @@
-package ui.behindTheScenes;
+package ui.UI;
 import model.Worker;
 import observer.*;
 import model.CompanyStore;

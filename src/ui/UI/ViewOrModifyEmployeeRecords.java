@@ -1,4 +1,4 @@
-package ui.behindTheScenes;
+package ui.UI;
 
 import Exceptions.LessThanMinWageException;
 import model.Employee;
@@ -10,7 +10,7 @@ import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
-import static ui.behindTheScenes.CreateNewEmployeeAndAdmin.tryThrowAndHandleMinWageException;
+import static ui.UI.CreateNewEmployeeAndAdmin.tryThrowAndHandleMinWageException;
 
 public class ViewOrModifyEmployeeRecords extends Subject {
 

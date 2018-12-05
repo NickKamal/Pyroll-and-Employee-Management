@@ -1,4 +1,4 @@
-package ui.behindTheScenes;
+package ui.UI;
 
 import Exceptions.LessThanMinWageException;
 import model.*;
