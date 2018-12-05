@@ -2,22 +2,29 @@
 package ui.UI;
 
 import Exceptions.LessThanMinWageException;
-import model.*;
+import model.Employee;
+import model.Log;
+import model.Worker;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
-import static ui.UI.CreateNewEmployeeAndAdmin.*;
-import static ui.UI.ReadDataFromSource.*;
+import static ui.UI.CreateNewEmployeeAndAdmin.createAnEmployee;
+import static ui.UI.CreateNewEmployeeAndAdmin.makeNewAdmin;
+import static ui.UI.ReadDataFromSource.readData;
 import static ui.UI.SalaryCalculation.calculateSalary;
 import static ui.UI.StoreEmployeeRelation.*;
-import static ui.UI.ViewOrModifyEmployeeRecords.*;
+import static ui.UI.ViewOrModifyEmployeeRecords.showMeThePayRecords;
+import static ui.UI.ViewOrModifyEmployeeRecords.viewOrModifyEmployeeInfo;
 
 class UserInteraction {
 
 
     public static void main(String[] args) throws IOException, LessThanMinWageException {
-        
+
         // Initialize a scanner object
         Scanner kb = new Scanner(System.in);
 
