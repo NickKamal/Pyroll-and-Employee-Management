@@ -22,7 +22,7 @@ import static ui.GUI.StoreEmployeeRelation.removeEmployeeFromStore;
 import static ui.GUI.ViewOrModifyEmployeeRecords.showMeThePayRecords;
 import static ui.GUI.ViewOrModifyEmployeeRecords.viewOrModifyEmployeeInfo;
 
-public class UserInteraction extends JFrame {
+public class UI extends JFrame {
     static boolean flag = false;
 
 
