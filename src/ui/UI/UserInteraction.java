@@ -24,7 +24,6 @@ class UserInteraction {
 
 
     public static void main(String[] args) throws IOException, LessThanMinWageException {
-
         // Initialize a scanner object
         Scanner kb = new Scanner(System.in);
 
