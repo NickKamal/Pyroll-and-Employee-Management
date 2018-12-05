@@ -31,7 +31,6 @@ class UserInteraction {
 
         // Creates an admin dictionary
         Map admins = new HashMap();
-
         //Creates an employee-salary dictionary
         Map employeeSalaryRecord = new HashMap<>();
 
